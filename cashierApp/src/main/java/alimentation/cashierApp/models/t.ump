@@ -3,6 +3,12 @@ enum TransactionType { Payment, Cancellation }
 
 class Product
 {
+  Integer qty;
+  * -> 1 ProductType;
+}
+
+class ProductType
+{
   Integer idNumber;
   String name;
   String description;
@@ -17,7 +23,7 @@ class Promotion
   Integer quantity; //quantity needed for promo
   float price;
   float totalPrice;
-  * -<@> 1 Product;
+  * -<@> 1 ProductType;
 }
 
 class Transaction
@@ -25,7 +31,7 @@ class Transaction
   Integer idNumber;
   Time time;
   TransactionType transactiontype;
-  * -> 1..* Product;
+  * <- 1..* Product;
 }
 
 class Notes
