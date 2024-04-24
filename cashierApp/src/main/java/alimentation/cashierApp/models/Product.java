@@ -1,10 +1,17 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 
+package alimentation.cashierApp.models;
 
 import java.util.*;
 
+import org.hibernate.annotations.ManyToAny;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 // line 4 "t.ump"
+@Entity
 public class Product
 {
 
@@ -13,6 +20,7 @@ public class Product
   //------------------------
 
   //Product Attributes
+  @Id
   private int idNumber;
   private String name;
   private String description;
@@ -20,6 +28,7 @@ public class Product
   private float price;
 
   //Product Associations
+  @ManyToAny
   private List<Promotion> promotions;
 
   //------------------------

@@ -1,12 +1,21 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
+package alimentation.cashierApp.models;
 
 
 import java.sql.Date;
 import java.util.*;
+
+import alimentation.cashierApp.models.Transaction.TransactionType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+
 import java.sql.Time;
 
 // line 47 "t.ump"
+@Entity
 public class Report
 {
 
@@ -14,19 +23,24 @@ public class Report
   // ENUMERATIONS
   //------------------------
 
-  public enum TransactionType { Payment, Cancellation }
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //Report Attributes
+  @Id
   private int idNumber;
+  
   private Date date;
 
   //Report Associations
+  @OneToMany
   private List<Transaction> transactions;
+  @OneToMany
   private List<Notes> notes;
+
+  @ManyToOne
   private Employee employee;
 
   //------------------------

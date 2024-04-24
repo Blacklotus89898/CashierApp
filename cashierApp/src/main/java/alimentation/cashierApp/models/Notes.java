@@ -1,10 +1,15 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 
+package alimentation.cashierApp.models;
 
 import java.sql.Time;
 
-// line 31 "t.ump"
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
+@Entity
 public class Notes
 {
 
@@ -13,11 +18,13 @@ public class Notes
   //------------------------
 
   //Notes Attributes
+  @Id
   private int idNumber;
   private String message;
   private Time time;
 
   //Notes Associations
+  @ManyToOne
   private Report report;
 
   //------------------------

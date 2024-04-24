@@ -1,9 +1,14 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 
+package alimentation.cashierApp.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 // line 13 "t.ump"
+@Entity
 public class Promotion
 {
 
@@ -12,6 +17,7 @@ public class Promotion
   //------------------------
 
   //Promotion Attributes
+  @Id
   private int idNumber;
   private String name;
   private int quantity;
@@ -19,6 +25,7 @@ public class Promotion
   private float totalPrice;
 
   //Promotion Associations
+  @ManyToOne
   private Product product;
 
   //------------------------

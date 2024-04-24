@@ -1,9 +1,16 @@
+package alimentation.cashierApp.models;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 
 
 
 // line 39 "t.ump"
+@Entity
 public class Payment
 {
 
@@ -18,11 +25,13 @@ public class Payment
   //------------------------
 
   //Payment Attributes
+  @Id
   private int idNumber;
   private PaymentType paymenttype;
   private int amount;
 
   //Payment Associations
+  @ManyToOne
   private Transaction transaction;
 
   //------------------------

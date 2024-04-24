@@ -1,9 +1,14 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
+package alimentation.cashierApp.models;
 
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 // line 54 "t.ump"
+@Entity
 public class Employee
 {
 
@@ -12,6 +17,8 @@ public class Employee
   //------------------------
 
   //Employee Attributes
+  @Id
+  @GeneratedValue(strategy= GenerationType.AUTO)
   private int idNumber;
   private String name;
   private String privilege;
@@ -19,6 +26,8 @@ public class Employee
   //------------------------
   // CONSTRUCTOR
   //------------------------
+
+  public Employee(){}
 
   public Employee(int aIdNumber, String aName, String aPrivilege)
   {
