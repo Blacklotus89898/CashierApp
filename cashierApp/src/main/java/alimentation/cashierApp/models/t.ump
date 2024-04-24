@@ -1,0 +1,61 @@
+enum PaymentType { Credit, Debit, Cash }  
+enum TransactionType { Payment, Cancellation }  
+
+class Product
+{
+  Integer idNumber;
+  String name;
+  String description;
+  String productType;
+  float price;
+}
+
+class Promotion
+{
+  Integer idNumber;
+  String name;
+  Integer quantity; //quantity needed for promo
+  float price;
+  float totalPrice;
+  * -<@> 1 Product;
+}
+
+class Transaction
+{
+  Integer idNumber;
+  Time time;
+  TransactionType transactiontype;
+  * -> 1..* Product;
+}
+
+class Notes
+{
+  Integer idNumber;
+  String message;
+  Time time;
+  * -<@> 1 Report;
+}
+
+class Payment
+{
+  Integer idNumber;
+  PaymentType paymenttype;
+  Integer amount;
+  1..* -<@> 1 Transaction;
+}
+
+class Report
+{
+  Integer idNumber;
+  Date date;
+  1 -- * Transaction;
+}
+
+class Employee
+{
+  Integer idNumber;
+  String name;
+  1 <- * Report;
+  String privilege;
+}
+
