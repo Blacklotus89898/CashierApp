@@ -12,6 +12,8 @@ jobs:
 
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
+    
+    - name: Make Gradlew Executable
       run: gradle wrapper
 
     - name: Make Gradlew Executable
