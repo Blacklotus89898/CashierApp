@@ -22,27 +22,28 @@ public class Product
   //Product Attributes
   @Id
   private int idNumber;
-  private String name;
-  private String description;
-  private String productType;
-  private float price;
+  private int quantity;
 
   //Product Associations
-  @ManyToAny
-  private List<Promotion> promotions;
+  private ProductType productType;
+  private Transaction transaction;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Product(int aIdNumber, String aName, String aDescription, String aProductType, float aPrice)
+  public Product(int aIdNumber, int aQuantity, ProductType aProductType, Transaction aTransaction)
   {
     idNumber = aIdNumber;
-    name = aName;
-    description = aDescription;
-    productType = aProductType;
-    price = aPrice;
-    promotions = new ArrayList<Promotion>();
+    quantity = aQuantity;
+    if (!setProductType(aProductType))
+    {
+      throw new RuntimeException("Unable to create Product due to aProductType. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+    if (!setTransaction(aTransaction))
+    {
+      throw new RuntimeException("Unable to create Product due to aTransaction. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
   }
 
   //------------------------
@@ -57,34 +58,10 @@ public class Product
     return wasSet;
   }
 
-  public boolean setName(String aName)
+  public boolean setQuantity(int aQuantity)
   {
     boolean wasSet = false;
-    name = aName;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setDescription(String aDescription)
-  {
-    boolean wasSet = false;
-    description = aDescription;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setProductType(String aProductType)
-  {
-    boolean wasSet = false;
-    productType = aProductType;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setPrice(float aPrice)
-  {
-    boolean wasSet = false;
-    price = aPrice;
+    quantity = aQuantity;
     wasSet = true;
     return wasSet;
   }
@@ -94,137 +71,47 @@ public class Product
     return idNumber;
   }
 
-  public String getName()
+  public int getQuantity()
   {
-    return name;
+    return quantity;
   }
-
-  public String getDescription()
-  {
-    return description;
-  }
-
-  public String getProductType()
+  /* Code from template association_GetOne */
+  public ProductType getProductType()
   {
     return productType;
   }
-
-  public float getPrice()
+  /* Code from template association_GetOne */
+  public Transaction getTransaction()
   {
-    return price;
+    return transaction;
   }
-  /* Code from template association_GetMany */
-  public Promotion getPromotion(int index)
+  /* Code from template association_SetUnidirectionalOne */
+  public boolean setProductType(ProductType aNewProductType)
   {
-    Promotion aPromotion = promotions.get(index);
-    return aPromotion;
-  }
-
-  public List<Promotion> getPromotions()
-  {
-    List<Promotion> newPromotions = Collections.unmodifiableList(promotions);
-    return newPromotions;
-  }
-
-  public int numberOfPromotions()
-  {
-    int number = promotions.size();
-    return number;
-  }
-
-  public boolean hasPromotions()
-  {
-    boolean has = promotions.size() > 0;
-    return has;
-  }
-
-  public int indexOfPromotion(Promotion aPromotion)
-  {
-    int index = promotions.indexOf(aPromotion);
-    return index;
-  }
-  /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfPromotions()
-  {
-    return 0;
-  }
-  /* Code from template association_AddManyToOne */
-  public Promotion addPromotion(int aIdNumber, String aName, int aQuantity, float aPrice, float aTotalPrice)
-  {
-    return new Promotion(aIdNumber, aName, aQuantity, aPrice, aTotalPrice, this);
-  }
-
-  public boolean addPromotion(Promotion aPromotion)
-  {
-    boolean wasAdded = false;
-    if (promotions.contains(aPromotion)) { return false; }
-    Product existingProduct = aPromotion.getProduct();
-    boolean isNewProduct = existingProduct != null && !this.equals(existingProduct);
-    if (isNewProduct)
+    boolean wasSet = false;
+    if (aNewProductType != null)
     {
-      aPromotion.setProduct(this);
+      productType = aNewProductType;
+      wasSet = true;
     }
-    else
-    {
-      promotions.add(aPromotion);
-    }
-    wasAdded = true;
-    return wasAdded;
+    return wasSet;
   }
-
-  public boolean removePromotion(Promotion aPromotion)
+  /* Code from template association_SetUnidirectionalOne */
+  public boolean setTransaction(Transaction aNewTransaction)
   {
-    boolean wasRemoved = false;
-    //Unable to remove aPromotion, as it must always have a product
-    if (!this.equals(aPromotion.getProduct()))
+    boolean wasSet = false;
+    if (aNewTransaction != null)
     {
-      promotions.remove(aPromotion);
-      wasRemoved = true;
+      transaction = aNewTransaction;
+      wasSet = true;
     }
-    return wasRemoved;
-  }
-  /* Code from template association_AddIndexControlFunctions */
-  public boolean addPromotionAt(Promotion aPromotion, int index)
-  {  
-    boolean wasAdded = false;
-    if(addPromotion(aPromotion))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfPromotions()) { index = numberOfPromotions() - 1; }
-      promotions.remove(aPromotion);
-      promotions.add(index, aPromotion);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMovePromotionAt(Promotion aPromotion, int index)
-  {
-    boolean wasAdded = false;
-    if(promotions.contains(aPromotion))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfPromotions()) { index = numberOfPromotions() - 1; }
-      promotions.remove(aPromotion);
-      promotions.add(index, aPromotion);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addPromotionAt(aPromotion, index);
-    }
-    return wasAdded;
+    return wasSet;
   }
 
   public void delete()
   {
-    while (promotions.size() > 0)
-    {
-      Promotion aPromotion = promotions.get(promotions.size() - 1);
-      aPromotion.delete();
-      promotions.remove(aPromotion);
-    }
-    
+    productType = null;
+    transaction = null;
   }
 
 
@@ -232,9 +119,8 @@ public class Product
   {
     return super.toString() + "["+
             "idNumber" + ":" + getIdNumber()+ "," +
-            "name" + ":" + getName()+ "," +
-            "description" + ":" + getDescription()+ "," +
-            "productType" + ":" + getProductType()+ "," +
-            "price" + ":" + getPrice()+ "]";
+            "quantity" + ":" + getQuantity()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "productType = "+(getProductType()!=null?Integer.toHexString(System.identityHashCode(getProductType())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "transaction = "+(getTransaction()!=null?Integer.toHexString(System.identityHashCode(getTransaction())):"null");
   }
 }

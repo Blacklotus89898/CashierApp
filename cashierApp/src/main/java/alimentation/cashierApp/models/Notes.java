@@ -36,10 +36,9 @@ public class Notes
     idNumber = aIdNumber;
     message = aMessage;
     time = aTime;
-    boolean didAddReport = setReport(aReport);
-    if (!didAddReport)
+    if (!setReport(aReport))
     {
-      throw new RuntimeException("Unable to create note due to report. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create Notes due to aReport. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
 
@@ -90,34 +89,21 @@ public class Notes
   {
     return report;
   }
-  /* Code from template association_SetOneToMany */
-  public boolean setReport(Report aReport)
+  /* Code from template association_SetUnidirectionalOne */
+  public boolean setReport(Report aNewReport)
   {
     boolean wasSet = false;
-    if (aReport == null)
+    if (aNewReport != null)
     {
-      return wasSet;
+      report = aNewReport;
+      wasSet = true;
     }
-
-    Report existingReport = report;
-    report = aReport;
-    if (existingReport != null && !existingReport.equals(aReport))
-    {
-      existingReport.removeNote(this);
-    }
-    report.addNote(this);
-    wasSet = true;
     return wasSet;
   }
 
   public void delete()
   {
-    Report placeholderReport = report;
-    this.report = null;
-    if(placeholderReport != null)
-    {
-      placeholderReport.removeNote(this);
-    }
+    report = null;
   }
 
 
