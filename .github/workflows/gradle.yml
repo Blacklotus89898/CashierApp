@@ -25,7 +25,7 @@ jobs:
     - name: Gradle Wrapper
       run: gradle init
     - name: Test with Gradle Wrapper
-      run: gradle clean test
+      run: ./gradlew clean test
 
     - name: Build with Gradle Wrapper
       run: gradle build
