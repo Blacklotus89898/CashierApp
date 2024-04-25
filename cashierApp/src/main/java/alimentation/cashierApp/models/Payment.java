@@ -43,10 +43,9 @@ public class Payment
     idNumber = aIdNumber;
     paymenttype = aPaymenttype;
     amount = aAmount;
-    boolean didAddTransaction = setTransaction(aTransaction);
-    if (!didAddTransaction)
+    if (!setTransaction(aTransaction))
     {
-      throw new RuntimeException("Unable to create payment due to transaction. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create Payment due to aTransaction. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
 
@@ -97,45 +96,21 @@ public class Payment
   {
     return transaction;
   }
-  /* Code from template association_SetOneToMandatoryMany */
-  public boolean setTransaction(Transaction aTransaction)
+  /* Code from template association_SetUnidirectionalOne */
+  public boolean setTransaction(Transaction aNewTransaction)
   {
     boolean wasSet = false;
-    //Must provide transaction to payment
-    if (aTransaction == null)
+    if (aNewTransaction != null)
     {
-      return wasSet;
+      transaction = aNewTransaction;
+      wasSet = true;
     }
-
-    if (transaction != null && transaction.numberOfPayments() <= Transaction.minimumNumberOfPayments())
-    {
-      return wasSet;
-    }
-
-    Transaction existingTransaction = transaction;
-    transaction = aTransaction;
-    if (existingTransaction != null && !existingTransaction.equals(aTransaction))
-    {
-      boolean didRemove = existingTransaction.removePayment(this);
-      if (!didRemove)
-      {
-        transaction = existingTransaction;
-        return wasSet;
-      }
-    }
-    transaction.addPayment(this);
-    wasSet = true;
     return wasSet;
   }
 
   public void delete()
   {
-    Transaction placeholderTransaction = transaction;
-    this.transaction = null;
-    if(placeholderTransaction != null)
-    {
-      placeholderTransaction.removePayment(this);
-    }
+    transaction = null;
   }
 
 

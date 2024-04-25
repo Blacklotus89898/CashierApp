@@ -26,23 +26,22 @@ public class Promotion
 
   //Promotion Associations
   @ManyToOne
-  private Product product;
+  private ProductType productType;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Promotion(int aIdNumber, String aName, int aQuantity, float aPrice, float aTotalPrice, Product aProduct)
+  public Promotion(int aIdNumber, String aName, int aQuantity, float aPrice, float aTotalPrice, ProductType aProductType)
   {
     idNumber = aIdNumber;
     name = aName;
     quantity = aQuantity;
     price = aPrice;
     totalPrice = aTotalPrice;
-    boolean didAddProduct = setProduct(aProduct);
-    if (!didAddProduct)
+    if (!setProductType(aProductType))
     {
-      throw new RuntimeException("Unable to create promotion due to product. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+      throw new RuntimeException("Unable to create Promotion due to aProductType. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
 
@@ -118,38 +117,25 @@ public class Promotion
     return totalPrice;
   }
   /* Code from template association_GetOne */
-  public Product getProduct()
+  public ProductType getProductType()
   {
-    return product;
+    return productType;
   }
-  /* Code from template association_SetOneToMany */
-  public boolean setProduct(Product aProduct)
+  /* Code from template association_SetUnidirectionalOne */
+  public boolean setProductType(ProductType aNewProductType)
   {
     boolean wasSet = false;
-    if (aProduct == null)
+    if (aNewProductType != null)
     {
-      return wasSet;
+      productType = aNewProductType;
+      wasSet = true;
     }
-
-    Product existingProduct = product;
-    product = aProduct;
-    if (existingProduct != null && !existingProduct.equals(aProduct))
-    {
-      existingProduct.removePromotion(this);
-    }
-    product.addPromotion(this);
-    wasSet = true;
     return wasSet;
   }
 
   public void delete()
   {
-    Product placeholderProduct = product;
-    this.product = null;
-    if(placeholderProduct != null)
-    {
-      placeholderProduct.removePromotion(this);
-    }
+    productType = null;
   }
 
 
@@ -161,6 +147,6 @@ public class Promotion
             "quantity" + ":" + getQuantity()+ "," +
             "price" + ":" + getPrice()+ "," +
             "totalPrice" + ":" + getTotalPrice()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "product = "+(getProduct()!=null?Integer.toHexString(System.identityHashCode(getProduct())):"null");
+            "  " + "productType = "+(getProductType()!=null?Integer.toHexString(System.identityHashCode(getProductType())):"null");
   }
 }
