@@ -25,10 +25,10 @@ jobs:
     - name: Gradle Wrapper
       run: gradle init
     - name: Test with Gradle Wrapper
-      run: ./gradlew clean test
+      run: ./gradlew test
 
     - name: Build with Gradle Wrapper
-      run: gradle build
+      run: ./gradlew build
 
   dependency-submission:
 
