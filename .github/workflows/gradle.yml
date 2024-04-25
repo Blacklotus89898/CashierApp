@@ -21,9 +21,9 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+    - name: wehwe
+      run: pwd ; ls
 
-    - name: Gradle Wrapper
-      run: gradle init
     - name: Test with Gradle Wrapper
       run: ./gradlew test
 
