@@ -21,10 +21,9 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: wehwe
-      run: pwd ; ls
 
     - name: Test with Gradle Wrapper
+     working-directory: ~CashierApp/Cashierapp
       run: ./gradlew test
 
     - name: Build with Gradle Wrapper
