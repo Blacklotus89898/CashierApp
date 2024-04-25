@@ -23,7 +23,7 @@ jobs:
         distribution: 'temurin'
 
     - name: Test with Gradle Wrapper
-      working-directory: ~CashierApp/Cashierapp
+      working-directory: ~/CashierApp/Cashierapp
       run: ./gradlew test
 
     - name: Build with Gradle Wrapper
