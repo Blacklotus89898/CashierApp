@@ -22,11 +22,13 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: Gradle Wrapper
+      run: gradle init
     - name: Test with Gradle Wrapper
       run: gradle clean test
 
     - name: Build with Gradle Wrapper
-      run: gradlew build
+      run: gradle build
 
   dependency-submission:
 
