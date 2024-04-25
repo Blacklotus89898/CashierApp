@@ -3,7 +3,7 @@ enum TransactionType { Payment, Cancellation }
 
 class Product
 {
-  Integer qty;
+  Integer quantity;
   * -> 1 ProductType;
 }
 
@@ -31,7 +31,7 @@ class Transaction
   Integer idNumber;
   Time time;
   TransactionType transactiontype;
-  * <- 1..* Product;
+  1 <- * Product;
 }
 
 class Notes
@@ -39,7 +39,7 @@ class Notes
   Integer idNumber;
   String message;
   Time time;
-  * -<@> 1 Report;
+  * -> 1 Report;
 }
 
 class Payment
@@ -54,7 +54,9 @@ class Report
 {
   Integer idNumber;
   Date date;
-  1 -- * Transaction;
+  Time start;
+  Time end;
+  1 <- * Transaction;
 }
 
 class Employee
