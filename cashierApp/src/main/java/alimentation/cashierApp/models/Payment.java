@@ -37,7 +37,10 @@ public class Payment
   //------------------------
   // CONSTRUCTOR
   //------------------------
-
+  public Payment()
+  {
+    //TODO Auto-generated constructor stub
+  }
   public Payment(int aIdNumber, PaymentType aPaymenttype, int aAmount, Transaction aTransaction)
   {
     idNumber = aIdNumber;
@@ -53,7 +56,7 @@ public class Payment
   // INTERFACE
   //------------------------
 
-  public boolean setIdNumber(int aIdNumber)
+public boolean setIdNumber(int aIdNumber)
   {
     boolean wasSet = false;
     idNumber = aIdNumber;

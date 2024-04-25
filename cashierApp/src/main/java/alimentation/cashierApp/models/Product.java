@@ -3,12 +3,11 @@
 
 package alimentation.cashierApp.models;
 
-import java.util.*;
 
-import org.hibernate.annotations.ManyToAny;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 // line 4 "t.ump"
 @Entity
@@ -25,7 +24,9 @@ public class Product
   private int quantity;
 
   //Product Associations
+  @ManyToOne
   private ProductType productType;
+  @ManyToOne
   private Transaction transaction;
 
   //------------------------
@@ -50,7 +51,11 @@ public class Product
   // INTERFACE
   //------------------------
 
-  public boolean setIdNumber(int aIdNumber)
+  public Product() {
+    //TODO Auto-generated constructor stub
+}
+
+public boolean setIdNumber(int aIdNumber)
   {
     boolean wasSet = false;
     idNumber = aIdNumber;

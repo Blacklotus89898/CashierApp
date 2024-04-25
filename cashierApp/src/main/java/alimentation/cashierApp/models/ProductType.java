@@ -28,7 +28,10 @@ public class ProductType
   //------------------------
   // CONSTRUCTOR
   //------------------------
-
+  public ProductType()
+  {
+    //TODO Auto-generated constructor stub
+  }
   public ProductType(int aIdNumber, String aName, String aDescription, String aProductType, float aPrice)
   {
     idNumber = aIdNumber;

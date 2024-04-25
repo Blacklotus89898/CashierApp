@@ -54,6 +54,10 @@ public class Report
   // INTERFACE
   //------------------------
 
+  public Report() {
+    //TODO Auto-generated constructor stub
+  }
+
   public boolean setIdNumber(int aIdNumber)
   {
     boolean wasSet = false;
