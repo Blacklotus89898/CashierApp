@@ -46,6 +46,10 @@ public class Notes
   // INTERFACE
   //------------------------
 
+  public Notes() {
+    //TODO Auto-generated constructor stub
+  }
+
   public boolean setIdNumber(int aIdNumber)
   {
     boolean wasSet = false;

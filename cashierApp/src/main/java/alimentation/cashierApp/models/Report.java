@@ -4,13 +4,10 @@ package alimentation.cashierApp.models;
 
 
 import java.sql.Date;
-import java.util.*;
 
-import alimentation.cashierApp.models.Transaction.TransactionType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 
 import java.sql.Time;
 

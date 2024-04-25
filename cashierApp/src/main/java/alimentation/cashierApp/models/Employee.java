@@ -3,8 +3,6 @@
 package alimentation.cashierApp.models;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 // line 54 "t.ump"
