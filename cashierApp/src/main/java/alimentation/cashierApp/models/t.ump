@@ -3,6 +3,7 @@ enum TransactionType { Payment, Cancellation }
 
 class Product
 {
+  Integer idNumber;
   Integer quantity;
   * -> 1 ProductType;
 }
