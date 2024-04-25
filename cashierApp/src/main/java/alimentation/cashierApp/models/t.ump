@@ -24,7 +24,7 @@ class Promotion
   Integer quantity; //quantity needed for promo
   float price;
   float totalPrice;
-  * -<@> 1 ProductType;
+  * -> 1 ProductType;
 }
 
 class Transaction
@@ -48,7 +48,7 @@ class Payment
   Integer idNumber;
   PaymentType paymenttype;
   Integer amount;
-  1..* -<@> 1 Transaction;
+  1..* -> 1 Transaction;
 }
 
 class Report
