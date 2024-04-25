@@ -14,7 +14,7 @@ jobs:
       uses: gradle/gradle-build-action@v2
     
     - name: Make Gradlew Executable
-      run: gradle wrapper
+      run: gradle init
 
     - name: Make Gradlew Executable
       run: chmod +x gradlew
