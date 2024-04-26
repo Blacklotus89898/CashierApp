@@ -23,9 +23,10 @@ public class Report
   //Report Attributes
   @Id
   private int idNumber;
+  
   private Date date;
-  private Time start;
-  private Time end;
+  private Time start_time;
+  private Time end_time;
 
   //Report Associations  
   @ManyToOne
@@ -39,8 +40,8 @@ public class Report
   {
     idNumber = aIdNumber;
     date = aDate;
-    start = aStart;
-    end = aEnd;
+    start_time = aStart;
+    end_time = aEnd;
     if (!setEmployee(aEmployee))
     {
       throw new RuntimeException("Unable to create Report due to aEmployee. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
@@ -74,7 +75,7 @@ public class Report
   public boolean setStart(Time aStart)
   {
     boolean wasSet = false;
-    start = aStart;
+    start_time = aStart;
     wasSet = true;
     return wasSet;
   }
@@ -82,7 +83,7 @@ public class Report
   public boolean setEnd(Time aEnd)
   {
     boolean wasSet = false;
-    end = aEnd;
+    end_time = aEnd;
     wasSet = true;
     return wasSet;
   }
@@ -99,12 +100,12 @@ public class Report
 
   public Time getStart()
   {
-    return start;
+    return start_time;
   }
 
   public Time getEnd()
   {
-    return end;
+    return end_time;
   }
   /* Code from template association_GetOne */
   public Employee getEmployee()
@@ -135,7 +136,7 @@ public class Report
             "idNumber" + ":" + getIdNumber()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "date" + "=" + (getDate() != null ? !getDate().equals(this)  ? getDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "start" + "=" + (getStart() != null ? !getStart().equals(this)  ? getStart().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "end" + "=" + (getEnd() != null ? !getEnd().equals(this)  ? getEnd().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "end_time" + "=" + (getEnd() != null ? !getEnd().equals(this)  ? getEnd().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "employee = "+(getEmployee()!=null?Integer.toHexString(System.identityHashCode(getEmployee())):"null");
   }
 }

@@ -10,7 +10,7 @@ import static org.mockito.Mockito.*;
 
 import alimentation.cashierApp.dao.EmployeeRepository;
 import alimentation.cashierApp.models.Employee;
-
+import java.util.Optional;
 @SpringBootTest
 public class EmployeeServiceTest {
 
@@ -36,14 +36,15 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void testAddEmployee() {
-        employeeService.addEmployee(MockEmployee);
+    public void testCreateEmployee() {
+        employeeService.createEmployee(MockEmployee);
         verify(employeeRepository, times(1)).save(MockEmployee);
     }
     
     @Test
     public void testGetEmployeeById() {
         int id = 1;
+        when(employeeRepository.findById(1)).thenReturn(Optional.of(MockEmployee));
         employeeService.getEmployeeById(id);
         verify(employeeRepository, times(1)).findById(id);
     }
@@ -58,7 +59,10 @@ public class EmployeeServiceTest {
     @Test
     public void testDeleteEmployee() {
         int id = 1;
+        when(employeeRepository.findById(1)).thenReturn(Optional.of(MockEmployee));
+        
         employeeService.deleteEmployee(id);
+        
         verify(employeeRepository, times(1)).deleteById(id);
     }
 }

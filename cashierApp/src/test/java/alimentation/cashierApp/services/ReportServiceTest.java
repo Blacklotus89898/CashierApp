@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import alimentation.cashierApp.dao.ReportRepository;
+import alimentation.cashierApp.models.Employee;
 import alimentation.cashierApp.models.Report;
 
 import java.util.Optional;
@@ -40,9 +41,12 @@ public class ReportServiceTest {
     }
 
     @Test
-    public void testAddReport() {
+    public void testCreateReport() {
         Report report = new Report();
-        reportService.addReport(report);
+        report.setEmployee(new Employee());
+        
+        reportService.createReport(report);
+        
         verify(reportRepository, times(1)).save(report);
     }
 
@@ -55,7 +59,10 @@ public class ReportServiceTest {
 
     @Test
     public void testDeleteReport() {
+        when(reportRepository.findById(1)).thenReturn(Optional.of(new Report()));
+        
         reportService.deleteReport(1);
+        
         verify(reportRepository, times(1)).deleteById(1);
     }
 }
