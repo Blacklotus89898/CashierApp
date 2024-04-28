@@ -2,6 +2,7 @@ package alimentation.cashierApp.controllers;
 
 import alimentation.cashierApp.dto.ReportDto;
 import alimentation.cashierApp.models.Report;
+import alimentation.cashierApp.services.EmployeeService;
 import alimentation.cashierApp.services.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,8 @@ public class ReportController {
 
     @Autowired
     private ReportService reportService;
+    @Autowired
+    private EmployeeService employeeService;
 
     // @PostMapping
     // public ResponseEntity<ReportDto> createReport(@RequestBody ReportDto reportDto) {
@@ -41,7 +44,7 @@ public class ReportController {
 
     @PutMapping
     public ResponseEntity<ReportDto> updateReport(@RequestBody ReportDto reportDto) {
-        Report report = reportService.updateReport(reportDto.toReport());
+        Report report = reportService.updateReport(toReport(reportDto));
         return ResponseEntity.ok(new ReportDto(report));
     }
 
@@ -51,11 +54,8 @@ public class ReportController {
         return ResponseEntity.noContent().build();
     }
 
-    // private ReportDto toReportDto(Report report) {
-    //     return new ReportDto(report.getIdNumber(), report.getName(), report.getPrivilege());
-    // }
-
-    // private Report toReport(ReportDto reportDto) {
-    //     return new Report(reportDto.getIdNumber(), reportDto.getName(), reportDto.getPrivilege());
-    // }
+    // awkwardly placed method
+    private Report toReport(ReportDto reportDto) {
+        return new Report(reportDto.getIdNumber(), reportDto.getDate(), reportDto.getStart(), reportDto.getEnd(), employeeService.getEmployeeById(reportDto.getEmployeeId()));
+    }
 }

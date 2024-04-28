@@ -1,7 +1,6 @@
 package alimentation.cashierApp.dto;
 
 import alimentation.cashierApp.models.Report;
-import alimentation.cashierApp.models.Employee;
 import java.sql.Date;
 import java.sql.Time;
 
@@ -11,18 +10,17 @@ public class ReportDto {
     private Date date;
     private Time start;
     private Time end;
-    private EmployeeDto employee; //change to EmployeeID, for security and less data transfer
     private int employeeId;
 
     // Constructors
     public ReportDto() {}
 
-    public ReportDto(int idNumber, Date date, Time start, Time end, EmployeeDto employee) { //change to EmployeeID
+    public ReportDto(int idNumber, Date date, Time start, Time end, int employeeId) { 
         this.idNumber = idNumber;
         this.date = date;
         this.start = start;
         this.end = end;
-        this.employee = employee;
+        this.employeeId = employeeId;
     }
 
     public ReportDto(Report report) {
@@ -30,9 +28,7 @@ public class ReportDto {
         this.date = report.getDate();
         this.start = report.getStart();
         this.end = report.getEnd();
-        Employee employee = report.getEmployee();
-        this.employee = new EmployeeDto(employee.getIdNumber(), employee.getName(), employee.getPrivilege()); 
-        //error due to triangle dependency import
+        this.employeeId = report.getEmployee().getIdNumber();
     }
 
     // Getters and Setters
@@ -66,20 +62,6 @@ public class ReportDto {
 
     public void setEnd(Time end) {
         this.end = end;
-    }
-
-    public EmployeeDto getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(EmployeeDto employee) {
-        this.employee = employee;
-    }
-
-    public Report toReport() {
-        // Employee employee = new Employee(this.employee.getIdNumber(), this.employee.getName(), this.employee.getPrivilege());
-        return new Report(idNumber, date, start, end, employee.toEmployee());
-        // return new Report(this.idNumber, this.date, this.start, this.end, new Employee(this.employee.getIdNumber(), this.employee.getName(), this.employee.getPrivilege()));
     }
 
     public int getEmployeeId() {

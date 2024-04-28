@@ -38,9 +38,9 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public void deleteEmployee(int id){
+    public void deleteEmployee(int id){ //cannot delete employee if they have a report 
         Optional<Employee> target = employeeRepository.findById(id);
-        if (target.isEmpty()) {
+        if (target.get() == null) {
             throw new CashierAppException(HttpStatus.NOT_FOUND, "Employee not found");
         }
         employeeRepository.deleteById(id);
