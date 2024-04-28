@@ -6,6 +6,8 @@ package alimentation.cashierApp.models;
 
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
@@ -20,7 +22,9 @@ public class Product
 
   //Product Attributes
   @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private int idNumber;
+  
   private int quantity;
 
   //Product Associations

@@ -1,6 +1,8 @@
 package alimentation.cashierApp.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
@@ -26,7 +28,9 @@ public class Payment
 
   //Payment Attributes
   @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private int idNumber;
+  
   private PaymentType paymenttype;
   private int amount;
 

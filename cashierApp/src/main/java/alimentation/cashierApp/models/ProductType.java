@@ -7,6 +7,8 @@ package alimentation.cashierApp.models;
 // line 11 "t.ump"
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
@@ -18,8 +20,10 @@ public class ProductType
   //------------------------
 
   //ProductType Attributes
-  @Id
+  @Id  
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private int idNumber;
+  
   private String name;
   private String description;
   private String productType;

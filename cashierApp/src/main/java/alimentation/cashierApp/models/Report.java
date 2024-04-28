@@ -6,6 +6,8 @@ package alimentation.cashierApp.models;
 import java.sql.Date;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
@@ -21,7 +23,8 @@ public class Report
   //------------------------
 
   //Report Attributes
-  @Id
+  @Id // make it generated automatically
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private int idNumber; //unique id, duplicate is updated
   
   private Date date;
