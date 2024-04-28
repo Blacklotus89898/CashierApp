@@ -3,9 +3,11 @@ package alimentation.cashierApp.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import alimentation.cashierApp.dao.ProductTypeRepository;
+import alimentation.cashierApp.exception.CashierAppException;
 import alimentation.cashierApp.models.ProductType;
 
 @Service
@@ -16,11 +18,11 @@ public class ProductTypeService {
 
 
     // Add methods for ProductType-related operations here
-    Iterable<ProductType> getAllProductTypes(){
+    public Iterable<ProductType> getAllProductTypes(){
         return ProductTypeRepository.findAll();
     }
 
-    ProductType getProductTypeById(int id){
+    public ProductType getProductTypeById(int id){
         Optional<ProductType> response = ProductTypeRepository.findById(id);
         if (response.isPresent()) {
             return response.get();
@@ -28,16 +30,22 @@ public class ProductTypeService {
         return null;
     }
 
-    void addProductType(ProductType ProductType){
-        ProductTypeRepository.save(ProductType);
+    public ProductType addProductType(ProductType ProductType){
+        return ProductTypeRepository.save(ProductType);
     }
 
-    void updateProductType(ProductType ProductType){
-        ProductTypeRepository.save(ProductType);
+    public ProductType updateProductType(ProductType ProductType){
+        return ProductTypeRepository.save(ProductType);
     }
 
-    void deleteProductType(int id){
+    public ProductType deleteProductType(int id){
+        Optional<ProductType> target = ProductTypeRepository.findById(id);
+        ProductType result = target.get();
+        if (result == null){
+            throw new CashierAppException(HttpStatus.BAD_REQUEST, "ProductType missing");
+        }
         ProductTypeRepository.deleteById(id);
+        return result;
     }
 
     // void deleteAllProductTypes(){
