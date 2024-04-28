@@ -11,12 +11,13 @@ public class ReportDto {
     private Date date;
     private Time start;
     private Time end;
-    private EmployeeDto employee;
+    private EmployeeDto employee; //change to EmployeeID, for security and less data transfer
+    private int employeeId;
 
     // Constructors
     public ReportDto() {}
 
-    public ReportDto(int idNumber, Date date, Time start, Time end, EmployeeDto employee) {
+    public ReportDto(int idNumber, Date date, Time start, Time end, EmployeeDto employee) { //change to EmployeeID
         this.idNumber = idNumber;
         this.date = date;
         this.start = start;
@@ -79,5 +80,13 @@ public class ReportDto {
         // Employee employee = new Employee(this.employee.getIdNumber(), this.employee.getName(), this.employee.getPrivilege());
         return new Report(idNumber, date, start, end, employee.toEmployee());
         // return new Report(this.idNumber, this.date, this.start, this.end, new Employee(this.employee.getIdNumber(), this.employee.getName(), this.employee.getPrivilege()));
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
     }
 }

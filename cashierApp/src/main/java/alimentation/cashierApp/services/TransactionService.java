@@ -1,11 +1,15 @@
 package alimentation.cashierApp.services;
 
 import java.util.Optional;
+import java.util.ArrayList;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import alimentation.cashierApp.dao.ReportRepository;
 import alimentation.cashierApp.dao.TransactionRepository;
+import alimentation.cashierApp.models.Report;
 import alimentation.cashierApp.models.Transaction;
 
 @Service
@@ -13,14 +17,24 @@ public class TransactionService {
 
     @Autowired
     private TransactionRepository TransactionRepository;
+    @Autowired
+    private ReportRepository reportRepository;
 
 
     // Add methods for Transaction-related operations here
-    Iterable<Transaction> getAllTransactions(){
+    public Iterable<Transaction> getAllTransactions(){
         return TransactionRepository.findAll();
     }
 
-    Transaction getTransactionById(int id){
+    public Iterable<Transaction> getAllTransactionsByReportId(int reportId){
+        Report report = reportRepository.findById(reportId).orElse(null);
+        if (report != null) {
+            return TransactionRepository.findAllByReport(report);
+        }
+        return new ArrayList<>(); // or throw an exception
+    }
+
+    public Transaction getTransactionById(int id){
         Optional<Transaction> response = TransactionRepository.findById(id);
         if (response.isPresent()) {
             return response.get();
@@ -28,15 +42,15 @@ public class TransactionService {
         return null;
     }
 
-    void addTransaction(Transaction Transaction){
-        TransactionRepository.save(Transaction);
+    public Transaction addTransaction(Transaction Transaction){
+        return TransactionRepository.save(Transaction);
     }
 
-    void updateTransaction(Transaction Transaction){
-        TransactionRepository.save(Transaction);
+    public Transaction updateTransaction(Transaction Transaction){
+        return TransactionRepository.save(Transaction);
     }
 
-    void deleteTransaction(int id){
+    public void deleteTransaction(int id){
         TransactionRepository.deleteById(id);
     }
 }

@@ -22,7 +22,7 @@ public class Report
 
   //Report Attributes
   @Id
-  private int idNumber;
+  private int idNumber; //unique id, duplicate is updated
   
   private Date date;
   private Time start_time;
@@ -30,7 +30,7 @@ public class Report
 
   //Report Associations  
   @ManyToOne
-  private Employee employee;
+  private Employee employee; //db only checks for the employee id
 
   //------------------------
   // CONSTRUCTOR

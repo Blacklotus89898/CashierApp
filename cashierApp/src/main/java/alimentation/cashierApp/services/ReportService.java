@@ -16,6 +16,8 @@ public class ReportService {
     @Autowired
     private ReportRepository ReportRepository;
 
+    // Implement getByEmployeeId method here ##########
+
     // Add methods for Report-related operations here
     public Iterable<Report> getAllReports() {
         return ReportRepository.findAll();
