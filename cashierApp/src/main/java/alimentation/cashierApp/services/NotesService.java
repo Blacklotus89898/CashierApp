@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import alimentation.cashierApp.dao.NotesRepository;
 import alimentation.cashierApp.dao.ReportRepository;
+import alimentation.cashierApp.exception.CashierAppException;
 import alimentation.cashierApp.models.Notes;
 import alimentation.cashierApp.models.Report;
 
@@ -20,19 +22,20 @@ public class NotesService {
     private ReportRepository reportRepository;
 
     // Add methods for Notes-related operations here
-    Iterable<Notes> getAllNotes() {
+    public Iterable<Notes> getAllNotes() {
         return NotesRepository.findAll();
     }
 
-    Iterable<Notes> getAllNotesByReportId(int reportId) {
-        Report report = reportRepository.findById(reportId).orElse(null);
-        if (report != null) {
-            return NotesRepository.findAllByReport(report);
+    public Iterable<Notes> getAllNotesByReportId(int reportId) {
+        Optional<Report> report = reportRepository.findById(reportId);
+        Report result = report.get();
+        if (result != null) {
+            return NotesRepository.findAllByReport(result);
         }
-        return new ArrayList<>(); // or throw an exception
+        throw new CashierAppException(HttpStatus.BAD_REQUEST, "Report missing");
     }
 
-    Notes getNotesById(int id) {
+    public Notes getNotesById(int id) {
         Optional<Notes> response = NotesRepository.findById(id);
         if (response.isPresent()) {
             return response.get();
@@ -40,15 +43,20 @@ public class NotesService {
         return null;
     }
 
-    void addNotes(Notes Notes) {
-        NotesRepository.save(Notes);
+    public Notes addNotes(Notes Notes) {
+        return NotesRepository.save(Notes);
     }
 
-    void updateNotes(Notes Notes) {
-        NotesRepository.save(Notes);
+    public Notes updateNotes(Notes Notes) {
+        return NotesRepository.save(Notes);
     }
 
-    void deleteNotes(int id) {
+    public Notes deleteNotes(int id) { //get the deleted item in case of mistake
+        Optional<Notes> note = NotesRepository.findById(id);
+        if (note.get() == null){
+            throw new CashierAppException(HttpStatus.BAD_REQUEST, "Notes missing");
+        }
         NotesRepository.deleteById(id);
+        return note.get();
     }
 }
