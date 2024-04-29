@@ -35,6 +35,15 @@ public class ReportController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(reportDtos);
     }
+    
+    @GetMapping("/employee")
+    public ResponseEntity<List<ReportDto>> getAllByEmployee(@RequestParam("employeeId") int employeeId) {
+        List<Report> reports = (List<Report>) reportService.getAllReportsByEmployeeId(employeeId);
+        List<ReportDto> reportDtos = reports.stream()
+                .map(ReportDto::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(reportDtos);
+    }
 
     @GetMapping
     public ResponseEntity<ReportDto> getReportById(@RequestParam("id") int id) {

@@ -4,6 +4,8 @@
 package alimentation.cashierApp.models;
 
 
+import jakarta.persistence.Column;
+
 // line 11 "t.ump"
 
 import jakarta.persistence.Entity;
@@ -23,10 +25,13 @@ public class ProductType
   @Id  
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int idNumber;
-  
-  private String name;
+
+  @Column(unique=true)
+  private String name; //name shoud be unique
+
   private String description;
-  private String productType;
+  private String productType; //should be an enum in future //rename as category, 
+  // very costy operation for db 
   private float price;
 
   //------------------------

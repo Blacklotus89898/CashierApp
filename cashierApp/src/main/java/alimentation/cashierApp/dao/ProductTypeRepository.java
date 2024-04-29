@@ -6,4 +6,7 @@ import alimentation.cashierApp.models.ProductType;
 
 public interface ProductTypeRepository extends CrudRepository<ProductType, Integer>{
     
+    Iterable<ProductType> findAllByProductType(String productType);
+
+    ProductType findByName(String name);
 }

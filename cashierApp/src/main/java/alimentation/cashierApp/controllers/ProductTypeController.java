@@ -36,7 +36,24 @@ public class ProductTypeController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping
+    @GetMapping("/productType") //require severe renaming to category
+    public ResponseEntity<List<ProductTypeDto>> getAllProductTypesByProductType(@RequestParam("productType") String productType) {
+        List<ProductTypeDto> productTypeDtos = new ArrayList<>();
+        productTypeService.getAllProductTypesByProductType(productType)
+                .forEach(productTypes -> productTypeDtos.add(new ProductTypeDto(productTypes)));
+        return new ResponseEntity<>(productTypeDtos, HttpStatus.OK);
+    }
+    
+    @GetMapping("/name")
+    public ResponseEntity<ProductTypeDto> getProductTypeByName(@RequestParam("name") String name) {
+        ProductType productType = productTypeService.getProductTypeByName(name);
+        if (productType != null) {
+            return new ResponseEntity<>(new ProductTypeDto(productType), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping //need error check to avoid duplicate names
     public ResponseEntity<ProductTypeDto> addProductType(@RequestBody ProductTypeDto productTypeDto) {
         ProductType productType = productTypeService.addProductType(productTypeDto.toProductType());
         return new ResponseEntity<>(new ProductTypeDto(productType), HttpStatus.CREATED);
