@@ -13,7 +13,7 @@ import jakarta.persistence.ManyToOne;
 
 // line 4 "t.ump"
 @Entity
-public class Product
+public class Product //should be called selection, should have a field to track the exact individual price
 {
 
   //------------------------
@@ -26,6 +26,7 @@ public class Product
   private int idNumber;
   
   private int quantity;
+  private float currentPrice;
 
   //Product Associations
   @ManyToOne
@@ -37,10 +38,11 @@ public class Product
   // CONSTRUCTOR
   //------------------------
 
-  public Product(int aIdNumber, int aQuantity, ProductType aProductType, Transaction aTransaction)
+  public Product(int aIdNumber, int aQuantity, float aCurrentPrice, ProductType aProductType, Transaction aTransaction)
   {
     idNumber = aIdNumber;
     quantity = aQuantity;
+    currentPrice = aCurrentPrice;
     if (!setProductType(aProductType))
     {
       throw new RuntimeException("Unable to create Product due to aProductType. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
@@ -84,6 +86,15 @@ public boolean setIdNumber(int aIdNumber)
   {
     return quantity;
   }
+
+  public float getCurrentPrice() {
+    return currentPrice;
+  }
+
+  public void setCurrentPrice(float currentPrice) {
+    this.currentPrice = currentPrice;
+  }
+
   /* Code from template association_GetOne */
   public ProductType getProductType()
   {
@@ -124,12 +135,12 @@ public boolean setIdNumber(int aIdNumber)
   }
 
 
-  public String toString()
-  {
-    return super.toString() + "["+
-            "idNumber" + ":" + getIdNumber()+ "," +
-            "quantity" + ":" + getQuantity()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "productType = "+(getProductType()!=null?Integer.toHexString(System.identityHashCode(getProductType())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "transaction = "+(getTransaction()!=null?Integer.toHexString(System.identityHashCode(getTransaction())):"null");
-  }
+  // public String toString()
+  // {
+  //   return super.toString() + "["+
+  //           "idNumber" + ":" + getIdNumber()+ "," +
+  //           "quantity" + ":" + getQuantity()+ "]" + System.getProperties().getProperty("line.separator") +
+  //           "  " + "productType = "+(getProductType()!=null?Integer.toHexString(System.identityHashCode(getProductType())):"null") + System.getProperties().getProperty("line.separator") +
+  //           "  " + "transaction = "+(getTransaction()!=null?Integer.toHexString(System.identityHashCode(getTransaction())):"null");
+  // }
 }
