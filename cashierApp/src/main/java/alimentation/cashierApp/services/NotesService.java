@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import alimentation.cashierApp.dao.NotesRepository;
-import alimentation.cashierApp.dao.ReportRepository;
 import alimentation.cashierApp.exception.CashierAppException;
 import alimentation.cashierApp.models.Notes;
 import alimentation.cashierApp.models.Report;
@@ -18,7 +17,7 @@ public class NotesService {
     @Autowired
     private NotesRepository NotesRepository;
     @Autowired
-    private ReportRepository reportRepository;
+    private ReportService reportService; //use service not dao
 
     // Add methods for Notes-related operations here
     public Iterable<Notes> getAllNotes() {
@@ -26,12 +25,11 @@ public class NotesService {
     }
 
     public Iterable<Notes> getAllNotesByReportId(int reportId) {
-        Optional<Report> report = reportRepository.findById(reportId);
-        Report result = report.get();
-        if (result != null) {
-            return NotesRepository.findAllByReport(result);
+        Report report = reportService.getReportById(reportId);
+        if (report == null) {
+            throw new CashierAppException(HttpStatus.BAD_REQUEST, "Report missing");
         }
-        throw new CashierAppException(HttpStatus.BAD_REQUEST, "Report missing");
+        return NotesRepository.findAllByReport(report);
     }
 
     public Notes getNotesById(int id) {

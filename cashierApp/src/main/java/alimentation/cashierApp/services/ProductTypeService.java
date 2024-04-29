@@ -22,12 +22,21 @@ public class ProductTypeService {
         return ProductTypeRepository.findAll();
     }
 
+    public Iterable<ProductType> getAllProductTypesByProductType(String productType){
+        return ProductTypeRepository.findAllByProductType(productType);
+    }
+
     public ProductType getProductTypeById(int id){
         Optional<ProductType> response = ProductTypeRepository.findById(id);
         if (response.isPresent()) {
             return response.get();
         }
         return null;
+    }
+
+
+    public ProductType getProductTypeByName(String name){
+        return ProductTypeRepository.findByName(name);
     }
 
     public ProductType addProductType(ProductType ProductType){

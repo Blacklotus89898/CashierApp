@@ -7,18 +7,21 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import alimentation.cashierApp.dao.ReportRepository;
 import alimentation.cashierApp.dao.TransactionRepository;
 import alimentation.cashierApp.models.Report;
 import alimentation.cashierApp.models.Transaction;
 
 @Service
-public class TransactionService {
+public class TransactionService { //major fix needed here, should not allow another repository to be injected
+    // call from the service class I think
 
     @Autowired
     private TransactionRepository TransactionRepository;
+    // @Autowired
+    // private ReportRepository reportRepository;
+
     @Autowired
-    private ReportRepository reportRepository;
+    private ReportService reportService;
 
 
     // Add methods for Transaction-related operations here
@@ -27,7 +30,8 @@ public class TransactionService {
     }
 
     public Iterable<Transaction> getAllTransactionsByReportId(int reportId){
-        Report report = reportRepository.findById(reportId).orElse(null);
+        Report report = reportService.getReportById(reportId);
+        // Report report = reportRepository.findById(reportId).orElse(null);
         if (report != null) {
             return TransactionRepository.findAllByReport(report);
         }

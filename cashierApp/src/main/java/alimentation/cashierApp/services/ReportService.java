@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import alimentation.cashierApp.dao.ReportRepository;
 import alimentation.cashierApp.exception.CashierAppException;
+import alimentation.cashierApp.models.Employee;
 import alimentation.cashierApp.models.Report;
 
 @Service
@@ -16,11 +17,18 @@ public class ReportService {
     @Autowired
     private ReportRepository ReportRepository;
 
-    // Implement getByEmployeeId method here ##########
+    @Autowired
+    private EmployeeService employeeService;
+
 
     // Add methods for Report-related operations here
     public Iterable<Report> getAllReports() {
         return ReportRepository.findAll();
+    }
+
+    public Iterable<Report> getAllReportsByEmployeeId(int employeeId) {
+        Employee employee = employeeService.getEmployeeById(employeeId);
+        return ReportRepository.findAllByEmployee(employee);
     }
 
     public Report getReportById(int id) {
