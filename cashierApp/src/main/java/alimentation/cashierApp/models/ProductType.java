@@ -27,10 +27,10 @@ public class ProductType
   private int idNumber;
 
   @Column(unique=true)
-  private String name; //name shoud be unique
+  private String name; //name shoud be unique  why product type then?
 
   private String description;
-  private String productType; //should be an enum in future //rename as category, 
+  private String productType; //extra field or make it category <enum>
   // very costy operation for db 
   private float price;
 
