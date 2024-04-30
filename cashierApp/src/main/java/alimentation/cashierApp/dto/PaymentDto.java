@@ -1,18 +1,19 @@
 package alimentation.cashierApp.dto;
 
 import alimentation.cashierApp.models.Payment;
+import alimentation.cashierApp.models.Payment.PaymentType;
 
 public class PaymentDto {
 
     private int idNumber;
-    private String paymentType;
+    private PaymentType paymentType;
     private int amount;
     private int transactionId;
 
     public PaymentDto() {
     }
 
-    public PaymentDto(int idNumber, String paymentType, int amount, int transactionId) {
+    public PaymentDto(int idNumber, PaymentType paymentType, int amount, int transactionId) {
         this.idNumber = idNumber;
         this.paymentType = paymentType;
         this.amount = amount;
@@ -21,7 +22,7 @@ public class PaymentDto {
 
     public PaymentDto(Payment payment) {
         this.idNumber = payment.getIdNumber();
-        this.paymentType = payment.getPaymenttype().toString();
+        this.paymentType = payment.getPaymenttype();
         this.amount = payment.getAmount();
         this.transactionId = payment.getTransaction().getIdNumber();
     }
@@ -34,11 +35,11 @@ public class PaymentDto {
         this.idNumber = idNumber;
     }
 
-    public String getPaymentType() {
+    public PaymentType getPaymentType() {
         return paymentType;
     }
 
-    public void setPaymentType(String paymentType) {
+    public void setPaymentType(PaymentType paymentType) {
         this.paymentType = paymentType;
     }
 

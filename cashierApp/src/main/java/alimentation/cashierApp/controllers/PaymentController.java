@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import alimentation.cashierApp.dto.PaymentDto;
 import alimentation.cashierApp.models.Payment;
-import alimentation.cashierApp.models.Payment.PaymentType; //import from the model to be fixed
 import alimentation.cashierApp.models.Transaction;
 import alimentation.cashierApp.services.PaymentService;
 import alimentation.cashierApp.services.TransactionService;
@@ -73,6 +72,6 @@ public class PaymentController {
 
     private Payment toPayemnt(PaymentDto paymentDto) {
         Transaction transaction = transactionService.getTransactionById(paymentDto.getTransactionId());
-        return new Payment(paymentDto.getIdNumber(), PaymentType.valueOf(paymentDto.getPaymentType()) , paymentDto.getAmount(), transaction);
+        return new Payment(paymentDto.getIdNumber(), paymentDto.getPaymentType() , paymentDto.getAmount(), transaction);
     }
 }
