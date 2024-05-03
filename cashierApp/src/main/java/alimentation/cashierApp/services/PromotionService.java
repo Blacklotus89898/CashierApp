@@ -33,7 +33,7 @@ public class PromotionService {
         return null;
     }
 
-    public Promotion getPromotionByProductName(String productName){ //get by type also possible
+    public Promotion getPromotionByProductName(String productName){ //get by type also possible, should use Id
         ProductType productType = productTypeService.getProductTypeByName(productName);
         return PromotionRepository.findByProductType(productType);
     }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import alimentation.cashierApp.dto.PromotionDto;
 import alimentation.cashierApp.models.Promotion;
+import alimentation.cashierApp.services.ProductTypeService;
 import alimentation.cashierApp.services.PromotionService;
 
 @RestController
@@ -17,6 +18,8 @@ public class PromotionController {
 
     @Autowired
     private PromotionService promotionService;
+    @Autowired
+    private ProductTypeService productTypeService;
 
     @GetMapping
     public Iterable<PromotionDto> getAllPromotions() {
@@ -51,8 +54,8 @@ public class PromotionController {
         promotionService.deletePromotion(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    
     private Promotion toPromotion(PromotionDto promotionDto) {
-        return new Promotion(promotionDto.getIdNumber(), promotionDto.getName(), promotionDto.getQuantity(), promotionDto.getPrice(), promotionDto.getTotalPrice(), null);
+        return new Promotion(promotionDto.getIdNumber(), promotionDto.getName(), promotionDto.getQuantity(), promotionDto.getPrice(), promotionDto.getTotalPrice(), productTypeService.getProductTypeById(promotionDto.getProductTypeId()) );
     }
 }

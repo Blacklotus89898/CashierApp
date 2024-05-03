@@ -2,7 +2,7 @@ package alimentation.cashierApp.dto;
 
 import alimentation.cashierApp.models.Promotion;
 
-public class PromotionDto {
+public class PromotionDto { //has issue
 
     private int idNumber;
     private String name;

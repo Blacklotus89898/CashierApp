@@ -36,6 +36,10 @@ public class Promotion
   // CONSTRUCTOR
   //------------------------
 
+  public Promotion()
+  {
+    //TODO Auto-generated constructor stub
+  }
   public Promotion(int aIdNumber, String aName, int aQuantity, float aPrice, float aTotalPrice, ProductType aProductType)
   {
     idNumber = aIdNumber;
