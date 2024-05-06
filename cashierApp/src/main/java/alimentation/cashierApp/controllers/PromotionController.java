@@ -38,11 +38,11 @@ public class PromotionController {
         return new PromotionDto(promotionService.getPromotionByProductName(productName));
     }
 
-    @PostMapping
-    public PromotionDto addPromotion(@RequestBody PromotionDto promotionDto) {
-        Promotion promotion = toPromotion(promotionDto);
-        return new PromotionDto(promotionService.addPromotion(promotion));
-    }
+    // @PostMapping
+    // public PromotionDto addPromotion(@RequestBody PromotionDto promotionDto) {
+    //     Promotion promotion = toPromotion(promotionDto);
+    //     return new PromotionDto(promotionService.addPromotion(promotion));
+    // }
 
     @PutMapping()
     public PromotionDto updatePromotion(@RequestBody PromotionDto promotionDto) {
@@ -55,7 +55,13 @@ public class PromotionController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     
+    @DeleteMapping("/all")
+    public void deleteAllPromotions(){
+        promotionService.deleteAllPromotions();
+    }
+
     private Promotion toPromotion(PromotionDto promotionDto) {
         return new Promotion(promotionDto.getIdNumber(), promotionDto.getName(), promotionDto.getQuantity(), promotionDto.getPrice(), promotionDto.getTotalPrice(), productTypeService.getProductTypeById(promotionDto.getProductTypeId()) );
     }
+
 }

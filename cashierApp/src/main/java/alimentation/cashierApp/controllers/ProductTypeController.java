@@ -44,7 +44,7 @@ public class ProductTypeController {
         return new ResponseEntity<>(productTypeDtos, HttpStatus.OK);
     }
     
-    @GetMapping("/name")
+    @GetMapping("/name") //should be priotiized over category
     public ResponseEntity<ProductTypeDto> getProductTypeByName(@RequestParam("name") String name) {
         ProductType productType = productTypeService.getProductTypeByName(name);
         if (productType != null) {
@@ -68,6 +68,12 @@ public class ProductTypeController {
     @DeleteMapping
     public ResponseEntity<Void> deleteProductType(@RequestParam("id") int id) {
         productTypeService.deleteProductType(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/all")
+    public ResponseEntity<Void> deleteAllProductTypes() {
+        productTypeService.deleteAllProductTypes();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

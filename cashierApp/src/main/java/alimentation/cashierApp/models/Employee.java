@@ -2,6 +2,7 @@
 /*This code was generated using the UMPLE 1.33.0.6934.a386b0a58 modeling language!*/
 package alimentation.cashierApp.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,7 +22,9 @@ public class Employee
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int idNumber;
   
+   @Column(unique=true)
   private String name;
+  
   private String privilege;
 
   //------------------------

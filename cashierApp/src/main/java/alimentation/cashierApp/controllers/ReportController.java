@@ -37,7 +37,7 @@ public class ReportController {
     }
     
     @GetMapping("/employee")
-    public ResponseEntity<List<ReportDto>> getAllByEmployee(@RequestParam("employeeId") int employeeId) {
+    public ResponseEntity<List<ReportDto>> getAllByEmployeeId(@RequestParam("employeeId") int employeeId) {
         List<Report> reports = (List<Report>) reportService.getAllReportsByEmployeeId(employeeId);
         List<ReportDto> reportDtos = reports.stream()
                 .map(ReportDto::new)
@@ -63,8 +63,14 @@ public class ReportController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/all")
+    public ResponseEntity<Void> deleteAllReports() {
+        reportService.deleteAllReports();
+        return ResponseEntity.noContent().build();
+    }
+
     // awkwardly placed method
     private Report toReport(ReportDto reportDto) {
         return new Report(reportDto.getIdNumber(), reportDto.getDate(), reportDto.getStart(), reportDto.getEnd(), employeeService.getEmployeeById(reportDto.getEmployeeId()));
-    }
+    } 
 }

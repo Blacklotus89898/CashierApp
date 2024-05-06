@@ -39,6 +39,12 @@ public class EmployeeController {
         return ResponseEntity.ok(new EmployeeDto(employee));
     }
 
+    @GetMapping("/name")
+    public ResponseEntity<EmployeeDto> getEmployeeByName(@RequestParam("name") String name) {
+        Employee employee = employeeService.getEmployeeByName(name);
+        return ResponseEntity.ok(new EmployeeDto(employee));
+    }
+
     @PutMapping
     public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employeeDto) {
         Employee employee = employeeService.updateEmployee(employeeDto.toEmployee());
@@ -48,6 +54,12 @@ public class EmployeeController {
     @DeleteMapping
     public ResponseEntity<Void> deleteEmployee(@RequestParam("id") int id) {
         employeeService.deleteEmployee(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/all")
+    public ResponseEntity<Void> deleteAllEmployees() {
+        employeeService.deleteAllEmployees();
         return ResponseEntity.noContent().build();
     }
 

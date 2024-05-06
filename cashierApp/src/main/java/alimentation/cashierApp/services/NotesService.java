@@ -56,4 +56,8 @@ public class NotesService {
         NotesRepository.deleteById(id);
         return note.get();
     }
+
+    public void deleteAllNotes() {
+        NotesRepository.deleteAll();
+    }
 }

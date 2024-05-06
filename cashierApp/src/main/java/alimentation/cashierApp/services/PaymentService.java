@@ -54,4 +54,8 @@ public class PaymentService {
         PaymentRepository.deleteById(id);
         return target;
     }
+
+    public void deleteAllPayments() {
+        PaymentRepository.deleteAll();
+    }
 }

@@ -70,6 +70,11 @@ public class PaymentController {
         }
     }
 
+    @DeleteMapping("/all")
+    public void deleteAllPayments() {
+        paymentService.deleteAllPayments();
+    }
+
     private Payment toPayemnt(PaymentDto paymentDto) {
         Transaction transaction = transactionService.getTransactionById(paymentDto.getTransactionId());
         return new Payment(paymentDto.getIdNumber(), paymentDto.getPaymentType() , paymentDto.getAmount(), transaction);

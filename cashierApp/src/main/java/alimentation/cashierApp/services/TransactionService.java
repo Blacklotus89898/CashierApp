@@ -57,4 +57,8 @@ public class TransactionService { //major fix needed here, should not allow anot
     public void deleteTransaction(int id){
         TransactionRepository.deleteById(id);
     }
+
+    public void deleteAllTransactions() {
+        TransactionRepository.deleteAll();
+    }
 }

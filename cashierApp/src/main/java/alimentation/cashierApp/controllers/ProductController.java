@@ -35,10 +35,18 @@ public class ProductController { //styling consistencty to be fixed
         return  notesDtos;
     }
 
-    @GetMapping("/{transactionId}")
-    public Iterable<ProductDto> getAllProductsByTransaction(@PathVariable int transactionId) {
+    @GetMapping("transaction/{transactionId}")
+    public Iterable<ProductDto> getAllProductsByTransactionId(@PathVariable int transactionId) {
         List<ProductDto> notesDtos = new ArrayList<>();
         Iterable<Product> target = productService.getAllProductsByTransactionId(transactionId);
+        target.forEach(note -> notesDtos.add(new ProductDto(note)));
+        return notesDtos;
+    }
+
+    @GetMapping("productType/{productTypeId}")
+    public Iterable<ProductDto> getAllProductsByProductTypeId(@PathVariable int productTypeId) {
+        List<ProductDto> notesDtos = new ArrayList<>();
+        Iterable<Product> target = productService.getAllProductsByProductTypeId(productTypeId);
         target.forEach(note -> notesDtos.add(new ProductDto(note)));
         return notesDtos;
     }
@@ -68,6 +76,11 @@ public class ProductController { //styling consistencty to be fixed
     @DeleteMapping()
     public ProductDto deleteProduct(@RequestParam("id") int id) {
         return new ProductDto(productService.deleteProduct(id));
+    }
+
+    @DeleteMapping("/all")
+    public void deleteAllProducts() {
+        productService.deleteAllProducts();
     }
 
     private Product toProduct(ProductDto productDto) {

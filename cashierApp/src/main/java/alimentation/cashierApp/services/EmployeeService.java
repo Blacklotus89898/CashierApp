@@ -30,6 +30,11 @@ public class EmployeeService {
         return response.get();
     }
 
+    
+    public Employee getEmployeeByName(String name) {
+        return employeeRepository.findByName(name);
+    }
+
     public Employee createEmployee(Employee employee){
         return employeeRepository.save(employee);
     }
@@ -45,4 +50,9 @@ public class EmployeeService {
         }
         employeeRepository.deleteById(id);
     }
+
+    public void deleteAllEmployees() {
+        employeeRepository.deleteAll();
+    }
+
 }

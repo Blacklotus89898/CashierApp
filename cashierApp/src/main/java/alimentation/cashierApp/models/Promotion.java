@@ -29,7 +29,7 @@ public class Promotion
   private float totalPrice;
 
   //Promotion Associations
-  @ManyToOne
+  @ManyToOne //should be OneToOne
   private ProductType productType;
 
   //------------------------

@@ -57,7 +57,8 @@ public class ProductTypeService {
         return result;
     }
 
-    // void deleteAllProductTypes(){
-    //     ProductTypeRepository.deleteAll();
-    // }
+    public void deleteAllProductTypes() {
+        ProductTypeRepository.deleteAll();
+    }
+
 }

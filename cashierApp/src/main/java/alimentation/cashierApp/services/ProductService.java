@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import alimentation.cashierApp.dao.ProductRepository;
 import alimentation.cashierApp.exception.CashierAppException;
 import alimentation.cashierApp.models.Product;
+import alimentation.cashierApp.models.ProductType;
 import alimentation.cashierApp.models.Transaction;
 
 @Service
@@ -16,9 +17,10 @@ public class ProductService { //requires error catching
 
     @Autowired
     private ProductRepository ProductRepository;
-
     @Autowired
     private TransactionService transactionService;
+    @Autowired
+    private ProductTypeService productTypeService;
 
 
     // Add methods for Product-related operations here
@@ -29,6 +31,12 @@ public class ProductService { //requires error catching
     public Iterable<Product> getAllProductsByTransactionId(int transactionId){
         Transaction transaction = transactionService.getTransactionById(transactionId);
         return ProductRepository.findAllByTransaction(transaction);
+    }
+
+    
+    public Iterable<Product> getAllProductsByProductTypeId(int productTypeId) {
+        ProductType productType = productTypeService.getProductTypeById(productTypeId);
+        return ProductRepository.findAllByProductType(productType);
     }
     
     // filtering method is inefficient and poorly synergized with the transaction id, query directly from the dao
@@ -68,4 +76,9 @@ public class ProductService { //requires error catching
         ProductRepository.deleteById(id);
         return result;
     }
+
+    public void deleteAllProducts() {
+        ProductRepository.deleteAll();
+    }
+
 }

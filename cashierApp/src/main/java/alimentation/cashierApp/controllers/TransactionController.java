@@ -32,7 +32,7 @@ public class TransactionController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/{reportId}")
+    @GetMapping("report/{reportId}")
     public List<TransactionDto> getAllTransactionsByReportId(@PathVariable int reportId) {
         Iterable<Transaction> transactions = transactionService.getAllTransactionsByReportId(reportId);
         return StreamSupport.stream(transactions.spliterator(), false)
@@ -67,5 +67,10 @@ public class TransactionController {
     @DeleteMapping
     public void deleteTransaction(@RequestParam("id") int id) {
         transactionService.deleteTransaction(id);
+    }
+
+    @DeleteMapping("/all")
+    public void deleteAllTransactions() {
+        transactionService.deleteAllTransactions();
     }
 }

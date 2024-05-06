@@ -39,7 +39,7 @@ public class NotesController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     
-    @GetMapping("/{reportId}")
+    @GetMapping("report/{reportId}")
     public ResponseEntity<List<NotesDto>> getNotesByReportId(@PathVariable int reportId) {
         List<NotesDto> notesDtos = new ArrayList<>();
         notesService.getAllNotesByReportId(reportId).forEach(note -> notesDtos.add(new NotesDto(note)));
@@ -64,6 +64,11 @@ public class NotesController {
     public ResponseEntity<NotesDto> deleteNotes(@RequestParam("id") int id) {
         NotesDto result = new NotesDto(notesService.deleteNotes(id));
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @DeleteMapping("all")
+    public void deleteAllNotes() {
+        notesService.deleteAllNotes();
     }
 
     private Notes toNotes(NotesDto notesDto) {

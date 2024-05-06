@@ -61,4 +61,8 @@ public class ReportService {
         }
         ReportRepository.deleteById(id);
     }
+
+    public void deleteAllReports() {
+        ReportRepository.deleteAll();
+    }
 }
