@@ -12,12 +12,14 @@ import java.util.stream.Collectors;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/employees")
 public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
 
+    
     // @PostMapping
     // public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto employeeDto) {
     //     Employee employee = employeeService.createEmployee(employeeDto.toEmployee());
