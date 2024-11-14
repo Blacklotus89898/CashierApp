@@ -4,7 +4,13 @@ const Navbar = () => {
   return (
     <nav style={{ display: "flex", justifyContent: "space-around" }}>
       <div>
-        <Link to="/">Home</Link>
+        <Link to="/">Login</Link>
+      </div>
+      <div>
+        <Link to="/home">Home</Link>
+      </div>
+      <div>
+        <Link to="/admin">Admin</Link>
       </div>
       <div>
         <Link to="/sandbox">Sandbox</Link>

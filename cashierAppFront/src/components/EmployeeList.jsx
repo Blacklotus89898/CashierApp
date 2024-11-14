@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import EmployeeService from '../services/EmployeeService';
+import Employee from './Employee';
+import EmployeeEditor from './EmployeeEditor';
 
 const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
@@ -23,6 +25,23 @@ const EmployeeList = () => {
       });
   }, []);
 
+  const deleteEmployee = (id) => {
+    setLoading(true);
+    EmployeeService.deleteEmployee(id)
+      .then(() => {
+        setEmployees(employees.filter(employee => employee.idNumber !== id));
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  }
+
+  const updateEmployee = (updatedEmployee) => {
+    console.log(updatedEmployee);
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -36,9 +55,22 @@ const EmployeeList = () => {
       <h1>Employee List</h1>
       <ul>
         {employees.map(employee => (
-          <li key={employee.idNumber}>
-            {employee.name} - {employee.privilege}
-          </li>
+          <>
+          <Employee 
+            key={employee.idNumber} 
+            name={employee.name} 
+            idNumber={employee.idNumber} 
+            privilege={employee.privilege} 
+            onEmitDelete={deleteEmployee}
+            />
+          <EmployeeEditor
+            key={employee.name}
+            name={employee.name}
+            idNumber={employee.idNumber}
+            privilege={employee.privilege}
+            onEmitUpdate={updateEmployee}
+            />
+            </>
         ))}
       </ul>
     </div>

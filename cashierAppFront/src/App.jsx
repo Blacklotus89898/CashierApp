@@ -4,6 +4,8 @@ import Sandbox from './pages/Sandbox'
 import './App.css'
 import Navbar from './components/Navbar'
 import Container from './components/Container'
+import Admin from './pages/Admin'
+import Login from './pages/Login'
 
 function App() {
 
@@ -13,8 +15,10 @@ function App() {
       <Navbar />
     </Container>
       <Routes>
-      <Route path="/" element={<Home/>} />
+      <Route path="/" element={<Login/>} />
+      <Route path="/home" element={<Home/>} />
       <Route path="/sandbox" element={<Sandbox/>} />
+      <Route path="/admin" element={<Admin/>} />
       </Routes>
 
     </>

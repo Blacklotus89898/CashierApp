@@ -9,6 +9,7 @@ const Sandbox = () => {
             <p>This is the Sandbox page.</p>
             <Container style={{ border: "1px solid black", borderRadius: "20px" }} >
              <EmployeeController />
+             <br />
             <EmployeeList />
 
             </Container>
