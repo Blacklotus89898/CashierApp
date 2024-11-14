@@ -1,7 +1,6 @@
 package alimentation.cashierApp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +11,10 @@ import alimentation.cashierApp.services.ReportService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/notes")
 public class NotesController {
 
@@ -24,51 +25,92 @@ public class NotesController {
 
     @GetMapping("/all")
     public ResponseEntity<List<NotesDto>> getAllNotes() {
-        List<NotesDto> notesDtos = new ArrayList<>();
-        notesService.getAllNotes().forEach(note -> notesDtos.add(new NotesDto(note)));
-        return new ResponseEntity<>(notesDtos, HttpStatus.OK);
+        try {
+            List<Notes> notes = new ArrayList<>();
+            notesService.getAllNotes().forEach(notes::add);
+            List<NotesDto> notesDtos = notes.stream()
+                    .map(NotesDto::new)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(notesDtos);
+        } catch (Exception e) {
+            NotesDto errorDto = new NotesDto();
+            errorDto.setMessage("Error: " + e.getMessage());
+            List<NotesDto> errorList = List.of(errorDto);
+            return ResponseEntity.status(500).body(errorList);
+        }
     }
 
     @GetMapping
     public ResponseEntity<NotesDto> getNotesById(@RequestParam("id") int id) {
-        Notes note = notesService.getNotesById(id);
-        if (note != null) {
-            NotesDto result = new NotesDto(note);
-            return new ResponseEntity<>(result, HttpStatus.OK);
+        try {
+            Notes note = notesService.getNotesById(id);
+            return ResponseEntity.ok(new NotesDto(note));
+        } catch (Exception e) {
+            NotesDto errorDto = new NotesDto();
+            errorDto.setMessage("Error: " + e.getMessage());
+            return ResponseEntity.status(500).body(errorDto);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    
+
     @GetMapping("report/{reportId}")
     public ResponseEntity<List<NotesDto>> getNotesByReportId(@PathVariable int reportId) {
-        List<NotesDto> notesDtos = new ArrayList<>();
-        notesService.getAllNotesByReportId(reportId).forEach(note -> notesDtos.add(new NotesDto(note)));
-        return new ResponseEntity<>(notesDtos, HttpStatus.OK);
+        try {
+            List<Notes> notes = new ArrayList<>();
+            notesService.getAllNotesByReportId(reportId).forEach(notes::add);
+            List<NotesDto> notesDtos = notes.stream()
+                    .map(NotesDto::new)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(notesDtos);
+        } catch (Exception e) {
+            NotesDto errorDto = new NotesDto();
+            errorDto.setMessage("Error: " + e.getMessage());
+            List<NotesDto> errorList = List.of(errorDto);
+            return ResponseEntity.status(500).body(errorList);
+        }
     }
 
     @PostMapping
     public ResponseEntity<NotesDto> addNotes(@RequestBody NotesDto notesDto) {
-        Notes note = notesService.addNotes(toNotes(notesDto));
-        NotesDto result = new NotesDto(note);
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+        try {
+            Notes note = notesService.addNotes(toNotes(notesDto));
+            return ResponseEntity.status(201).body(new NotesDto(note));
+        } catch (Exception e) {
+            NotesDto errorDto = new NotesDto();
+            errorDto.setMessage("Error: " + e.getMessage());
+            return ResponseEntity.status(500).body(errorDto);
+        }
     }
 
     @PutMapping
     public ResponseEntity<NotesDto> updateNotes(@RequestBody NotesDto notesDto) {
-        Notes note = toNotes(notesDto);
-        NotesDto result = new NotesDto(notesService.updateNotes(note));
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        try {
+            Notes note = toNotes(notesDto);
+            return ResponseEntity.ok(new NotesDto(notesService.updateNotes(note)));
+        } catch (Exception e) {
+            NotesDto errorDto = new NotesDto();
+            errorDto.setMessage("Error: " + e.getMessage());
+            return ResponseEntity.status(500).body(errorDto);
+        }
     }
 
-    @DeleteMapping    
-    public ResponseEntity<NotesDto> deleteNotes(@RequestParam("id") int id) {
-        NotesDto result = new NotesDto(notesService.deleteNotes(id));
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    @DeleteMapping
+    public ResponseEntity<String> deleteNotes(@RequestParam("id") int id) {
+        try {
+            notesService.deleteNotes(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("all")
-    public void deleteAllNotes() {
-        notesService.deleteAllNotes();
+    public ResponseEntity<String> deleteAllNotes() {
+        try {
+            notesService.deleteAllNotes();
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error: " + e.getMessage());
+        }
     }
 
     private Notes toNotes(NotesDto notesDto) {

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @RestController
 @RequestMapping("/reports")
 public class ReportController {
@@ -21,56 +20,73 @@ public class ReportController {
     @Autowired
     private EmployeeService employeeService;
 
-    // @PostMapping
-    // public ResponseEntity<ReportDto> createReport(@RequestBody ReportDto reportDto) {
-    //     Report report = reportService.createReport(reportDto.toReport());
-    //     return ResponseEntity.ok(new ReportDto(report));
-    // }
-
     @GetMapping("/all")
     public ResponseEntity<List<ReportDto>> getAllReports() {
-        List<Report> reports = (List<Report>) reportService.getAllReports();
-        List<ReportDto> reportDtos = reports.stream()
-                .map(ReportDto::new)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(reportDtos);
+        try {
+            List<Report> reports = (List<Report>) reportService.getAllReports();
+            List<ReportDto> reportDtos = reports.stream()
+                    .map(ReportDto::new)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(reportDtos);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
     }
-    
+
     @GetMapping("/employee")
     public ResponseEntity<List<ReportDto>> getAllByEmployeeId(@RequestParam("employeeId") int employeeId) {
-        List<Report> reports = (List<Report>) reportService.getAllReportsByEmployeeId(employeeId);
-        List<ReportDto> reportDtos = reports.stream()
-                .map(ReportDto::new)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(reportDtos);
+        try {
+            List<Report> reports = (List<Report>) reportService.getAllReportsByEmployeeId(employeeId);
+            List<ReportDto> reportDtos = reports.stream()
+                    .map(ReportDto::new)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(reportDtos);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
     }
 
     @GetMapping
     public ResponseEntity<ReportDto> getReportById(@RequestParam("id") int id) {
-        Report report = reportService.getReportById(id);
-        return ResponseEntity.ok(new ReportDto(report));
+        try {
+            Report report = reportService.getReportById(id);
+            return ResponseEntity.ok(new ReportDto(report));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
     }
 
     @PutMapping
     public ResponseEntity<ReportDto> updateReport(@RequestBody ReportDto reportDto) {
-        Report report = reportService.updateReport(toReport(reportDto));
-        return ResponseEntity.ok(new ReportDto(report));
+        try {
+            Report report = reportService.updateReport(toReport(reportDto));
+            return ResponseEntity.ok(new ReportDto(report));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
     }
 
     @DeleteMapping
     public ResponseEntity<Void> deleteReport(@RequestParam("id") int id) {
-        reportService.deleteReport(id);
-        return ResponseEntity.noContent().build();
+        try {
+            reportService.deleteReport(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
     }
 
     @DeleteMapping("/all")
     public ResponseEntity<Void> deleteAllReports() {
-        reportService.deleteAllReports();
-        return ResponseEntity.noContent().build();
+        try {
+            reportService.deleteAllReports();
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
     }
 
-    // awkwardly placed method
     private Report toReport(ReportDto reportDto) {
         return new Report(reportDto.getIdNumber(), reportDto.getDate(), reportDto.getStart(), reportDto.getEnd(), employeeService.getEmployeeById(reportDto.getEmployeeId()));
-    } 
+    }
 }

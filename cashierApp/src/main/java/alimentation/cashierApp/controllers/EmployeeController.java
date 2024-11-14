@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/employees")
@@ -19,57 +18,75 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    
-    // @PostMapping
-    // public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto employeeDto) {
-    //     Employee employee = employeeService.createEmployee(employeeDto.toEmployee());
-    //     return ResponseEntity.ok(new EmployeeDto(employee));
-    // }
-
     @GetMapping("/all")
     public ResponseEntity<List<EmployeeDto>> getAllEmployees() {
-        List<Employee> employees = (List<Employee>) employeeService.getAllEmployees();
-        List<EmployeeDto> employeeDtos = employees.stream()
-                .map(EmployeeDto::new)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(employeeDtos);
+        try {
+            List<Employee> employees = (List<Employee>) employeeService.getAllEmployees();
+            List<EmployeeDto> employeeDtos = employees.stream()
+                    .map(EmployeeDto::new)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(employeeDtos);
+        } catch (Exception e) {
+            EmployeeDto errorDto = new EmployeeDto();
+            errorDto.setName("Error: " + e.getMessage());
+            List<EmployeeDto> errorList = List.of(errorDto);
+            return ResponseEntity.status(500).body(errorList);
+        }
     }
 
     @GetMapping
     public ResponseEntity<EmployeeDto> getEmployeeById(@RequestParam("id") int id) {
-        Employee employee = employeeService.getEmployeeById(id);
-        return ResponseEntity.ok(new EmployeeDto(employee));
+        try {
+            Employee employee = employeeService.getEmployeeById(id);
+            return ResponseEntity.ok(new EmployeeDto(employee));
+        } catch (Exception e) {
+            EmployeeDto errorDto = new EmployeeDto();
+            errorDto.setName("Error: " + e.getMessage());
+            return ResponseEntity.status(500).body(errorDto);
+        }
     }
 
     @GetMapping("/name")
     public ResponseEntity<EmployeeDto> getEmployeeByName(@RequestParam("name") String name) {
-        Employee employee = employeeService.getEmployeeByName(name);
-        return ResponseEntity.ok(new EmployeeDto(employee));
+        try {
+            Employee employee = employeeService.getEmployeeByName(name);
+            return ResponseEntity.ok(new EmployeeDto(employee));
+        } catch (Exception e) {
+            EmployeeDto errorDto = new EmployeeDto();
+            errorDto.setName("Error: " + e.getMessage());
+            return ResponseEntity.status(500).body(errorDto);
+        }
     }
 
     @PutMapping
     public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employeeDto) {
-        Employee employee = employeeService.updateEmployee(employeeDto.toEmployee());
-        return ResponseEntity.ok(new EmployeeDto(employee));
+        try {
+            Employee employee = employeeService.updateEmployee(employeeDto.toEmployee());
+            return ResponseEntity.ok(new EmployeeDto(employee));
+        } catch (Exception e) {
+            EmployeeDto errorDto = new EmployeeDto();
+            errorDto.setName("Error: " + e.getMessage());
+            return ResponseEntity.status(500).body(errorDto);
+        }
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteEmployee(@RequestParam("id") int id) {
-        employeeService.deleteEmployee(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteEmployee(@RequestParam("id") int id) {
+        try {
+            employeeService.deleteEmployee(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/all")
-    public ResponseEntity<Void> deleteAllEmployees() {
-        employeeService.deleteAllEmployees();
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteAllEmployees() {
+        try {
+            employeeService.deleteAllEmployees();
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error: " + e.getMessage());
+        }
     }
-
-    // private EmployeeDto toEmployeeDto(Employee employee) {
-    //     return new EmployeeDto(employee.getIdNumber(), employee.getName(), employee.getPrivilege());
-    // }
-
-    // private Employee toEmployee(EmployeeDto employeeDto) {
-    //     return new Employee(employeeDto.getIdNumber(), employeeDto.getName(), employeeDto.getPrivilege());
-    // }
 }

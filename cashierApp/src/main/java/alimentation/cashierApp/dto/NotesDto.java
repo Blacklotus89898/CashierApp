@@ -11,6 +11,9 @@ public class NotesDto {
     private Time time;
     private int reportId;
 
+    public NotesDto() {
+    }
+
     public NotesDto(int idNumber, String message, Time time, int reportId) {
         this.idNumber = idNumber;
         this.message = message;
