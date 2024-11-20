@@ -13,20 +13,18 @@ const EmployeeController = () => {
 
   const createEmployee = (employee) => {
     setLoading(true);
-    EmployeeService.createEmployee(employee)
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
+    EmployeeService.createEmployee(employee).catch((error) => {
+      setError(error);
+      setLoading(false);
+    });
   };
 
   const updateEmployee = (id, updatedEmployee) => {
     setLoading(true);
-    EmployeeService.updateEmployee(updatedEmployee)
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
+    EmployeeService.updateEmployee(updatedEmployee).catch((error) => {
+      setError(error);
+      setLoading(false);
+    });
   };
 
   const deleteEmployee = (id) => {

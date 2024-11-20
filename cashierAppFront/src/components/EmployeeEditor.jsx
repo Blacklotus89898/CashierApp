@@ -14,7 +14,7 @@ const EmployeeEditor = ({ name, idNumber, privilege, onEmitUpdate })=> {
     }
 
     return (
-        <div>
+        <div style={{ border: "1px solid black", borderRadius: "20px" }}>
             <h1> {name} </h1>
             
             <input type="text" name="name" value={employee.name} onChange={handleInput}/>

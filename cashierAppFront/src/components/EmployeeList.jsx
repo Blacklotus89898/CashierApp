@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import EmployeeService from '../services/EmployeeService';
-import Employee from './Employee';
-import EmployeeEditor from './EmployeeEditor';
+import { useEffect, useState } from "react";
+import EmployeeService from "../services/EmployeeService";
+import Employee from "./Employee";
+import EmployeeEditor from "./EmployeeEditor";
 
 const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
@@ -10,16 +10,16 @@ const EmployeeList = () => {
 
   useEffect(() => {
     EmployeeService.getAllEmployees()
-      .then(response => {
+      .then((response) => {
         console.log(response);
         if (Array.isArray(response.data)) {
           setEmployees(response.data);
         } else {
-          setError(new Error('Unexpected response format'));
+          setError(new Error("Unexpected response format"));
         }
         setLoading(false);
       })
-      .catch(error => {
+      .catch((error) => {
         setError(error);
         setLoading(false);
       });
@@ -29,14 +29,14 @@ const EmployeeList = () => {
     setLoading(true);
     EmployeeService.deleteEmployee(id)
       .then(() => {
-        setEmployees(employees.filter(employee => employee.idNumber !== id));
+        setEmployees(employees.filter((employee) => employee.idNumber !== id));
         setLoading(false);
       })
       .catch((error) => {
         setError(error);
         setLoading(false);
       });
-  }
+  };
 
   const updateEmployee = (updatedEmployee) => {
     console.log(updatedEmployee);
@@ -54,23 +54,23 @@ const EmployeeList = () => {
     <div>
       <h1>Employee List</h1>
       <ul>
-        {employees.map(employee => (
+        {employees.map((employee) => (
           <>
-          <Employee 
-            key={employee.idNumber} 
-            name={employee.name} 
-            idNumber={employee.idNumber} 
-            privilege={employee.privilege} 
-            onEmitDelete={deleteEmployee}
+            <Employee
+              key={employee.idNumber}
+              name={employee.name}
+              idNumber={employee.idNumber}
+              privilege={employee.privilege}
+              onEmitDelete={deleteEmployee}
             />
-          <EmployeeEditor
-            key={employee.name}
-            name={employee.name}
-            idNumber={employee.idNumber}
-            privilege={employee.privilege}
-            onEmitUpdate={updateEmployee}
+            <EmployeeEditor
+              key={employee.name}
+              name={employee.name}
+              idNumber={employee.idNumber}
+              privilege={employee.privilege}
+              onEmitUpdate={updateEmployee}
             />
-            </>
+          </>
         ))}
       </ul>
     </div>
