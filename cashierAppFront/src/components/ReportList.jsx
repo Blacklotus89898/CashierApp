@@ -37,9 +37,9 @@ const ReportList = () => {
       });
   };
 
-  const updateReport = (updatedReport) => {
-    console.log(updatedReport);
-  };
+  // const updateReport = (updatedReport) => {
+  //   console.log(updatedReport);
+  // };
 
   if (loading) {
     return <div>Loading...</div>;
