@@ -21,7 +21,7 @@ public class PromotionController {
     @Autowired
     private ProductTypeService productTypeService;
 
-    @GetMapping
+    @GetMapping("/all")
     public Iterable<PromotionDto> getAllPromotions() {
         ArrayList<PromotionDto> promotionDtos = new ArrayList<>();
         promotionService.getAllPromotions().forEach(promotion -> promotionDtos.add(new PromotionDto(promotion)));
