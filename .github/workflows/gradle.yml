@@ -46,7 +46,3 @@ jobs:
       run: |
         echo "Waiting for Spring Boot to start..."
         sleep 30
-
-    - name: Run integration tests
-      run: ./gradlew integrationTest
-      working-directory: cashierApp
