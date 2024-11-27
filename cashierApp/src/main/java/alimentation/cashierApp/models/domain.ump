@@ -1,19 +1,22 @@
 enum PaymentType { Credit, Debit, Cash }  
-enum TransactionType { Payment, Cancellation }  
+enum TransactionType { Payment, Cancellation }
+enum Category {drink, food, other}
+
+
+class Selection
+{
+  Integer idNumber;
+  Integer quantity;
+  float currentPrice;
+  * -> 1 Product;
+}
 
 class Product
 {
   Integer idNumber;
-  Integer quantity;
-  * -> 1 ProductType;
-}
-
-class ProductType
-{
-  Integer idNumber;
   String name;
   String description;
-  String productType;
+  Category category;
   float price;
 }
 
@@ -24,7 +27,7 @@ class Promotion
   Integer quantity; //quantity needed for promo
   float price;
   float totalPrice;
-  * -> 1 ProductType;
+  0..1 -> 1 Product;
 }
 
 class Transaction
@@ -32,7 +35,7 @@ class Transaction
   Integer idNumber;
   Time time;
   TransactionType transactiontype;
-  1 <- * Product;
+  1 <- * Selection;
 }
 
 class Notes

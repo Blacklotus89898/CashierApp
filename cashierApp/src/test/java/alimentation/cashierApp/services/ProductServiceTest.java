@@ -55,6 +55,8 @@ public class ProductServiceTest {
 
     @Test
     public void testDeleteProduct() {
+        when(productRepository.findById(anyInt())).thenReturn(Optional.of(new Product()));
+
         productService.deleteProduct(1);
         verify(productRepository, times(1)).deleteById(1);
     }

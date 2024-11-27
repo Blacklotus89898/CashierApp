@@ -1,6 +1,7 @@
 package alimentation.cashierApp.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
@@ -25,6 +26,9 @@ public class NotesServiceTest {
     NotesService notesService;
 
     @Mock
+    ReportService reportService;
+
+    @Mock
     NotesRepository notesRepository;
     @Mock
     ReportRepository reportRepository; 
@@ -45,6 +49,7 @@ public class NotesServiceTest {
         Report report = new Report(); // create a Report object
         when(reportRepository.findById(anyInt())).thenReturn(Optional.of(report)); // mock the ReportRepository
         when(notesRepository.findAllByReport(report)).thenReturn(Arrays.asList(new Notes()));
+        when(reportService.getReportById(1)).thenReturn(report);
         assertEquals(1, ((Collection<?>) notesService.getAllNotesByReportId(1)).size());
     }
 
@@ -70,6 +75,7 @@ public class NotesServiceTest {
 
     @Test
     public void deleteNotesTest() {
+        when(notesRepository.findById(anyInt())).thenReturn(Optional.of(new Notes()));
         notesService.deleteNotes(1);
         verify(notesRepository, times(1)).deleteById(1);
     }

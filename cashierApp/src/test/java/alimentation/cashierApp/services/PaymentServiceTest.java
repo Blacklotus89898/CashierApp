@@ -55,6 +55,7 @@ public class PaymentServiceTest {
 
     @Test
     public void testDeletePayment() {
+        when(paymentRepository.findById(anyInt())).thenReturn(Optional.of(new Payment()));
         paymentService.deletePayment(1);
         verify(paymentRepository, times(1)).deleteById(1);
     }
