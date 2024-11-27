@@ -28,14 +28,17 @@ jobs:
     - name: Make Gradlew Executable
       run: chmod +x cashierApp/gradlew
 
-    # - name: Run build with Gradle Wrapper
-    #   run: ./cashierApp/gradlew build
+    - name: Run build with Gradle Wrapper
+      run: ./gradlew build
+      working-directory: cashierApp
 
     - name: Run tests with Gradle Wrapper
-      run: ./cashierApp/gradlew test
+      run: ./gradlew test
+      working-directory: cashierApp
 
     - name: Run Spring Boot application
-      run: ./cashierApp/gradlew bootRun &
+      run: ./gradlew bootRun &
+      working-directory: cashierApp
       env:
         SPRING_PROFILES_ACTIVE: test
 
@@ -45,4 +48,5 @@ jobs:
         sleep 30
 
     - name: Run integration tests
-      run: ./cashierApp/gradlew integrationTest
+      run: ./gradlew integrationTest
+      working-directory: cashierApp
