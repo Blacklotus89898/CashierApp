@@ -2,16 +2,20 @@ package alimentation.cashierApp.services;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 import alimentation.cashierApp.dao.EmployeeRepository;
 import alimentation.cashierApp.models.Employee;
+
 import java.util.Optional;
-@SpringBootTest
+
+@ExtendWith(MockitoExtension.class)
 public class EmployeeServiceTest {
 
     final static Employee MockEmployee = new Employee(0, null, null);
@@ -44,11 +48,11 @@ public class EmployeeServiceTest {
     @Test
     public void testGetEmployeeById() {
         int id = 1;
-        when(employeeRepository.findById(1)).thenReturn(Optional.of(MockEmployee));
-        employeeService.getEmployeeById(id);
+        when(employeeRepository.findById(id)).thenReturn(Optional.of(MockEmployee));
+        Employee result = employeeService.getEmployeeById(id);
+        assertEquals(MockEmployee, result);
         verify(employeeRepository, times(1)).findById(id);
     }
-
 
     @Test
     public void testUpdateEmployee() {
@@ -59,7 +63,7 @@ public class EmployeeServiceTest {
     @Test
     public void testDeleteEmployee() {
         int id = 1;
-        when(employeeRepository.findById(1)).thenReturn(Optional.of(MockEmployee));
+        when(employeeRepository.findById(id)).thenReturn(Optional.of(MockEmployee));
         
         employeeService.deleteEmployee(id);
         
