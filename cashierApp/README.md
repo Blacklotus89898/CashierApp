@@ -11,6 +11,8 @@ CashierApp is a Spring Boot application designed to manage cashier operations. T
     - [Installation](#installation)
   - [Running the Project](#running-the-project)
   - [Testing the Project](#testing-the-project)
+  - [Building Docker Image](#building-docker-image)
+  - [Running Container](#running-container)
 
 ## Getting Started
 
@@ -51,3 +53,15 @@ To build the project, run:
 ```sh 
 ./gradlew test
 ``` 
+
+## Building Docker Image
+
+```sh
+docker build -t my-springboot-app .
+```
+
+## Running Container
+
+```sh
+docker run -p 8080:8080 my-springboot-app
+```
