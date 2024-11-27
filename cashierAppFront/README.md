@@ -11,3 +11,8 @@ Currently, two official plugins are available:
 - Design in figma
 - Make usecase diagram in lucidchart
 - Draw functional mockup
+- Implement all service calls to test
+- Implement each page
+- Login
+- Manage reports
+- 
