@@ -28,8 +28,8 @@ jobs:
     - name: Make Gradlew Executable
       run: chmod +x cashierApp/gradlew
 
-    - name: Run build with Gradle Wrapper
-      run: ./cashierApp/gradlew build
+    # - name: Run build with Gradle Wrapper
+    #   run: ./cashierApp/gradlew build
 
     - name: Run tests with Gradle Wrapper
       run: ./cashierApp/gradlew test
