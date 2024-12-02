@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <nav style={{ display: "flex", justifyContent: "space-around" }}>
+    <nav style={{ display: "flex", justifyContent: "space-around", padding:" 1em" }}>
       <div>
         <Link to="/">Login</Link>
       </div>

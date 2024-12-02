@@ -34,7 +34,7 @@ jobs:
       - name: Run project
         run: npm start
 
-        - name: Stop project
-          run: kill $(lsof -t -i:3000)
+      - name: Stop project
+        run: kill $(lsof -t -i:3000)
       # - name: Run tests
       #   run: npm test

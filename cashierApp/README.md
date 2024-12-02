@@ -63,5 +63,8 @@ docker build -t my-springboot-app .
 ## Running Container
 
 ```sh
-docker run -p 8080:8080 my-springboot-app
+docker run -p 8080:8080 --name my-springboot-container my-springboot-app
+
+docker start my-springboot-container                        
+docker stop my-springboot-container                                        
 ```

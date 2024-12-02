@@ -11,34 +11,56 @@ import Transaction from "./pages/TransactionPage";
 import Product from "./pages/ProductPage";
 import ProductType from "./pages/ProductTypePage";
 import Report from "./pages/ReportPage";
+import { useState, useEffect } from "react";
+import userStore from "./stores/userStore";
 
 function App() {
   const location = useLocation();
   const isLoginPage = location.pathname === "/";
+  const [user, setUser] = useState("Guest");
+  
+  
+  useEffect(() => {
+    const handleUserChange = () => {
+      setUser(userStore.getState().user);
+    };
+
+    // Subscribe to changes (if needed)
+    // For simplicity, we'll just update the state directly here
+    userStore.handleUserChange = handleUserChange;
+
+    return () => {
+      // Cleanup subscription (if needed)
+      userStore.handleUserChange = null;
+    };
+  }, []);
 
   return (
     <>
       {!isLoginPage && (
-        <div>
+        <div style={{display:"flex"}}>
           <Container
             style={{ border: "1px solid black", borderRadius: "20px" }}
           >
             <Navbar />
           </Container>
+          <h1>Welcome {user}</h1>
         </div>
       )}
 
       <div style={{ display: "flex", justifyContent: "flex-start" }}>
         {!isLoginPage && (
           <Container
-            style={{ border: "1px solid black", borderRadius: "20px" }}
+            style={{ border: "1px solid black", borderRadius: "20px", flexGrow: 0.1 }}
           >
             <Sidebar />
           </Container>
         )}
 
         <Routes style={{ flexGrow: 4 }}>
-          <Route path="/" element={<Login />} />
+        <Route path="/" element={<Login onLogin={(formData) => {
+            setUser(formData.username);
+          }} />} />
           <Route path="/home" element={<Home />} />
           <Route path="/sandbox" element={<Sandbox />} />
           <Route path="/admin" element={<Admin />} />
