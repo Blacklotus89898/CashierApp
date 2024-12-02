@@ -32,7 +32,7 @@ jobs:
         run: npm run build
 
       - name: Run project
-        run: npm run dev
+        run: timeout 5m npm run dev
 
       - name: Stop project
         run: kill $(lsof -t -i:3000)
