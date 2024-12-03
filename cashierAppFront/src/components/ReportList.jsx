@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ReportService from "../services/ReportService";
 import Report from "./Report";
+import Container from "./Container";
 
 const ReportList = () => {
   const [reports, setReports] = useState([]);
@@ -37,9 +38,9 @@ const ReportList = () => {
       });
   };
 
-  // const updateReport = (updatedReport) => {
-  //   console.log(updatedReport);
-  // };
+  const updateReport = (updatedReport) => {
+    console.log(updatedReport);
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -50,23 +51,27 @@ const ReportList = () => {
   }
 
   return (
-    <div>
+    <Container>
       <h1>Report List</h1>
       <ul>
         {reports.map((report) => (
-          <>
+          <li key={report.idNumber}>
             <Report
-              key={report.idNumber}
               idNumber={report.idNumber}
               date={report.date}
+              start_time={report.start}
+              end_time={report.end}
               content={report.content}
               employeeId={report.employeeId}
               onEmitDelete={deleteReport}
+              onEmitUpdate={updateReport}
             />
-          </>
+            <button onClick={() => updateReport(report)}>Update</button>
+            <button onClick={() => deleteReport(report.idNumber)}>Delete</button>
+          </li>
         ))}
       </ul>
-    </div>
+    </Container>
   );
 };
 

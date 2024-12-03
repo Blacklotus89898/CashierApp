@@ -6,6 +6,9 @@ const ReportController = () => {
     title: "",
     content: "",
     employeeId: "",
+    start_time: "",
+    end_time: "",
+    date: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -23,9 +26,9 @@ const ReportController = () => {
       });
   };
 
-  const updateReport = (id, updatedReport) => {
+  const updateReport = (updatedReport) => {
     setLoading(true);
-    ReportService.updateReport(id, updatedReport)
+    ReportService.updateReport(updatedReport)
       .then(() => {
         setLoading(false);
       })
@@ -68,7 +71,7 @@ const ReportController = () => {
 
   const handleUpdateReport = (e) => {
     e.preventDefault();
-    updateReport(report.id, report);
+    updateReport(report);
     setReport({ title: "", content: "", employeeId: "" });
   };
 
@@ -80,7 +83,7 @@ const ReportController = () => {
 
   return (
     <div>
-      <form>
+      <form style={{display:"flex"}}>
         <input
           type="text"
           name="title"
@@ -104,6 +107,28 @@ const ReportController = () => {
           onChange={handleInputChange}
           required
         />
+          <label>Start Time:</label>
+          <input
+            type="time"
+            name="start_time"
+            value={report.start_time}
+            onChange={handleInputChange}
+          />
+          <label>End Time:</label>
+          <input
+            type="time"
+            name="end_time"
+            value={report.end_time}
+            onChange={handleInputChange}
+          />
+        <input
+          type="date"
+          name="date"
+          placeholder="Date"
+          value={report.date}
+          onChange={handleInputChange}
+          required
+          />
         <button onClick={handleCreateReport}>Add Report</button>
         <button onClick={handleUpdateReport}>Update Report</button>
         <button onClick={handleDeleteReport}>Delete Report</button>
