@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import userStore from "./stores/userStore";
 import Layout from "./components/Layout";
 import ErrorBoundary from "./components/ErrorBoundary";
+import UserPage from "./pages/UserPage";
 
 function App() {
   const [user, setUser] = useState("Guest");
@@ -35,10 +36,11 @@ function App() {
       <ErrorBoundary>
         <Layout user={user}>
           <Routes>
-            <Route path="/" element={<Login onLogin={(formData) => setUser(formData.username)} />} />
+            <Route path="/" element={<Login onLogin={(formData) => setUser(formData.username == null ? "Guest" : formData.username)} />} />
             <Route path="/home" element={<Home />} />
             <Route path="/sandbox" element={<Sandbox />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/employee" element={<UserPage />} />
             <Route path="/product" element={<Product />} />
             <Route path="/productType" element={<ProductType />} />
             <Route path="/transaction" element={<Transaction />} />

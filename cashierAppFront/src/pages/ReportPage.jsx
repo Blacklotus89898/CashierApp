@@ -1,17 +1,20 @@
 import Container from "../components/Container";
 import ReportController from "../components/ReportController";
+import ReportEditor from "../components/ReportEditor";
 import ReportList from "../components/ReportList";
 
 const ReportPage = () => {
   return (
-    <div>
-      <h1>Welcome to the Cashier App</h1>
-      <p>This is the Report page.</p>
-      <Container style={{ border: "1px solid black", borderRadius: "20px" }}>
+    <>
+      <h1>Report Page</h1>
+      <Container>
         <ReportController />
-        <ReportList />
       </Container>
+    <div style={{display:"flex"}}>
+        <ReportList />
+      <ReportEditor/>
     </div>
+    </>
   );
 };
 
